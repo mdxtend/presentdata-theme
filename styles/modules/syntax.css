@@ -1,0 +1,53 @@
+/* DOCUMENTATION STYLES */
+
+
+/** HEADING # LINK STYLES **/
+
+.docs-slug {
+  h1, h2, h3, h4, h5, h6 {
+    @apply relative font-mono tracking-tight;
+    word-spacing: -0.2em;
+  }
+}
+
+.word-space-tight {
+  @apply tracking-tight;
+  word-spacing: -0.2em;
+}
+
+h1 .anchor, h2 .anchor, h3 .anchor, h4 .anchor, h5 .anchor, h6 .anchor {
+  @apply absolute left-[-1.5rem] max-lg:relative max-lg:translate-y-1 max-lg:px-2 max-lg:opacity-40 max-lg:left-auto top-1/2 -translate-y-1/2 opacity-0 transition-opacity inline-flex items-center hover:!opacity-100 h-full;
+}
+
+h1.group-heading:hover .anchor, h2.group-heading:hover .anchor, h3.group-heading:hover .anchor, h4.group-heading:hover .anchor, h5.group-heading:hover .anchor, h6.group-heading:hover .anchor {
+  @apply opacity-40;
+}
+
+.anchor-icon {
+  @apply w-4 h-4 block text-current cursor-pointer;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  scroll-margin-top: 4.2rem;
+  letter-spacing: 1.2px;
+}
+
+
+/** CODE BLOCKS **/
+
+[data-rehype-pretty-code-figure] {
+  @apply m-0;
+}
+
+.wrap-text {
+  [data-theme="monokai"] {
+    @apply text-wrap;
+    /* white-space: pre-wrap;
+    word-break: break-word; */
+  }
+}

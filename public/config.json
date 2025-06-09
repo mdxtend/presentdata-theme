@@ -1,0 +1,204 @@
+{
+  "siteMetaData": {
+    "title": "Dr. Jane Doe",
+    "copyrightYearStart": 2023
+  },
+  "header": {
+    "navigation": [
+      { "label": "Home", "href": "/" },
+      { "label": "Publications", "href": "/publications" },
+      { "label": "Projects", "href": "/projects" },
+      { "label": "Blog", "href": "/blog" },
+      { "label": "Talks", "href": "/talks" },
+      { "label": "Teaching", "href": "/teaching" },
+      { "label": "CV", "href": "/cv" },
+      { "label": "Contact", "href": "/contact" }
+    ],
+    "searchEnabled": true,
+    "darkLightToggle": true,
+    "defaultTheme": "dark"
+  },
+
+  "landingPage": {
+    "sections": [
+      {
+        "type": "HeroSection",
+        "enabled": true,
+        "layout": "imageLeft",
+        "imageUrl": "/images/profile.jpg",
+        "name": "Dr. Jane Doe",
+        "designation": "Assistant Professor, Computer Science",
+        "summary": "Specializing in cryptography, secure systems, and formal verification. Passionate about teaching, open-source, and building decentralized tech."
+      },
+      {
+        "type": "PublicationsSection",
+        "enabled": true,
+        "title": "Selected Publications",
+        "view": "grid",
+        "columns": 2
+      },
+      {
+        "type": "BlogSection",
+        "enabled": true,
+        "title": "Research Notes",
+        "showExcerpt": true,
+        "maxPosts": 3
+      },
+      {
+        "type": "ProjectsSection",
+        "enabled": true,
+        "title": "Current Projects",
+        "display": "card"
+      },
+      {
+        "type": "TalksSection",
+        "enabled": false,
+        "title": "Invited Talks"
+      },
+      {
+        "type": "ContactSection",
+        "enabled": true,
+        "email": "jane.doe@university.edu",
+        "links": {
+          "GoogleScholar": "https://scholar.google.com/citations?user=XXXX",
+          "GitHub": "https://github.com/janedoe",
+          "LinkedIn": "https://linkedin.com/in/janedoe"
+        }
+      }
+    ]
+  },
+
+  "pages": [
+    {
+      "title": "Teaching",
+      "slug": "teaching",
+      "icon": "graduation-cap",
+      "layout": "stacked",
+      "sections": [
+        {
+          "sectionTitle": "Courses Taught",
+          "sectionType": "list",
+          "items": [
+            {
+              "code": "CS101",
+              "title": "Introduction to Systems",
+              "year": "Fall 2023",
+              "link": "/syllabus/cs101",
+              "mode": "In-person"
+            },
+            {
+              "code": "CS435",
+              "title": "Cryptography",
+              "year": "Spring 2024",
+              "link": "/syllabus/cs435",
+              "mode": "Hybrid"
+            },
+            {
+              "code": "CS789",
+              "title": "Advanced Security Models",
+              "year": "Fall 2022",
+              "link": "/syllabus/cs789",
+              "mode": "Online"
+            }
+          ]
+        },
+        {
+          "sectionTitle": "Student Mentorship",
+          "sectionType": "cards",
+          "description": "Supervision and collaboration with students across research domains.",
+          "items": [
+            {
+              "name": "Aditi Rao",
+              "level": "PhD",
+              "project": "Formal Verification of Post-Quantum Protocols",
+              "status": "Ongoing"
+            },
+            {
+              "name": "Rohan Iyer",
+              "level": "Masters",
+              "project": "Secure Federated Learning",
+              "status": "Completed"
+            }
+          ]
+        }
+      ]
+    },
+
+    {
+      "title": "CV",
+      "slug": "cv",
+      "icon": "file-text",
+      "layout": "accordion",
+      "downloadable": true,
+      "downloadLink": "/cv/janedoe_cv.pdf",
+      "sections": [
+        {
+          "sectionTitle": "Academic Background",
+          "sectionType": "timeline",
+          "items": [
+            {
+              "institution": "MIT",
+              "degree": "PhD in Computer Science",
+              "years": "2016–2020"
+            },
+            {
+              "institution": "Stanford University",
+              "degree": "MS in Applied Mathematics",
+              "years": "2014–2016"
+            },
+            {
+              "institution": "UIUC",
+              "degree": "BS in CS & Math",
+              "years": "2010–2014"
+            }
+          ]
+        },
+        {
+          "sectionTitle": "Awards & Fellowships",
+          "sectionType": "list",
+          "items": [
+            {
+              "name": "Best Paper Award – ACM CCS",
+              "year": "2023"
+            },
+            {
+              "name": "NSF CAREER Award",
+              "year": "2024"
+            },
+            {
+              "name": "Google Faculty Research Award",
+              "year": "2022"
+            }
+          ]
+        }
+      ]
+    },
+
+    {
+      "title": "Talks",
+      "slug": "talks",
+      "icon": "mic",
+      "layout": "grid",
+      "sections": [
+        {
+          "sectionTitle": "Invited Lectures",
+          "sectionType": "media",
+          "items": [
+            {
+              "title": "Zero-Knowledge Proofs in Practice",
+              "event": "ETHGlobal 2024",
+              "videoUrl": "https://youtube.com/embed/abc123",
+              "slidesLink": "/slides/zkp_ethglobal.pdf"
+            },
+            {
+              "title": "Ethics in AI Research",
+              "event": "NeurIPS Panel",
+              "videoUrl": "https://youtube.com/embed/xyz456",
+              "slidesLink": "/slides/ethics_ai_neurips.pdf"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
