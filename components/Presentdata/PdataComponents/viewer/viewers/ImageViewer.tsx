@@ -1,8 +1,8 @@
-import React, { useEffect, useRef, useState, useCallback, useId } from 'react';
-import Image, { ImageProps, StaticImageData } from 'next/image';
 import { useRouter } from 'next/router';
-import { motion, AnimatePresence } from 'framer-motion';
 import ShareMenu from '@/components/Elements/ShareMenu';
+import { motion, AnimatePresence } from 'framer-motion';
+import Image, { ImageProps, StaticImageData } from 'next/image';
+import React, { useEffect, useRef, useState, useCallback, useId } from 'react';
 
 export interface ImageViewerProps extends Omit<ImageProps, 'src' | 'alt'> {
     src: string | StaticImageData;
@@ -21,9 +21,11 @@ const ImageViewer = ({ src, alt, className = '', align = 'center', maxWidthClass
     const [isShareMenu, setIsShareMenu] = useState(false);
 
     if (!src) return null;
+    let filename: string = '';
 
     let resolvedSrc: string | StaticImageData = src;
     if (typeof src === 'string') {
+        filename = src.split('/').pop() || '';
         if (src.startsWith('http') || src.startsWith('data:')) {
             resolvedSrc = src;
         } else {
@@ -32,6 +34,12 @@ const ImageViewer = ({ src, alt, className = '', align = 'center', maxWidthClass
             if (!base.endsWith('/')) base += '/';
             const cleanSrc = src.startsWith('/') ? src.slice(1) : src;
             resolvedSrc = base + cleanSrc;
+        }
+    } else {
+        if (src && typeof src.src === 'string') {
+            filename = src.src.split('/').pop() || '';
+        } else {
+            filename = 'unknown_image';
         }
     }
 
@@ -81,20 +89,12 @@ const ImageViewer = ({ src, alt, className = '', align = 'center', maxWidthClass
             }
         };
 
-        // const preventScroll = (event: Event) => {
-        //     if (isFullscreen) event.preventDefault();
-        // };
-
         document.addEventListener('mousedown', handleClickOutside);
         window.addEventListener('keydown', handleKeyDown);
-        // window.addEventListener('wheel', preventScroll, { passive: false });
-        // window.addEventListener('touchmove', preventScroll, { passive: false });
 
         return () => {
             document.removeEventListener('mousedown', handleClickOutside);
             window.removeEventListener('keydown', handleKeyDown);
-            // window.removeEventListener('wheel', preventScroll);
-            // window.removeEventListener('touchmove', preventScroll);
         };
     }, [isFullscreen, closeFullscreen]);
 
@@ -103,7 +103,7 @@ const ImageViewer = ({ src, alt, className = '', align = 'center', maxWidthClass
 
     return (
         <div>
-            {/* Fullscreen Modal */}
+            {/* FULL SCREEN MODE */}
             <AnimatePresence>
                 {isFullscreen && (
                     <motion.div
@@ -156,7 +156,7 @@ const ImageViewer = ({ src, alt, className = '', align = 'center', maxWidthClass
                                 </motion.div>
                             </motion.div>
 
-                            {/* Modal Controls */}
+                            {/* MODAL CONTROLS */}
                             <motion.div className="h-20 fixed top-0 right-0 flex items-center gap-2 max-lg:gap-1.5 p-4 z-[350]"
                                 ref={closeButtonRef}
                                 onClick={(e) => e.stopPropagation()}
@@ -197,7 +197,6 @@ const ImageViewer = ({ src, alt, className = '', align = 'center', maxWidthClass
                                         className="stroke-current fill-current text-foreground-accent group-hover:text-foreground mb-1"
                                         viewBox="0 0 48 48"
                                         xmlns="http://www.w3.org/2000/svg"
-                                    // strokeWidth={4}
                                     >
                                         <path d="M31.2 14.2 41 24.1l-9.8 9.8V26.8L27 27c-6.8.3-12 1-16.1 2.4 3.6-3.8 9.3-6.8 16.7-7.5l3.6-.3V14.2zM28.3 6a1.2 1.2 0 0 0-1.1 1.3v10.6C12 19.4 2.2 29.8 2 40.3c0 .6.2 1 .6 1s.7-.3 1.1-1.1c2.4-5.4 7.8-8.5 23.5-9.2v9.7a1.2 1.2 0 0 0 1.1 1.3c.3 0 .6-.1.8-.4L45.6 25.1a1.5 1.5 0 0 0 0-2L29.1 6.4c-.2-.3-.5-.4-.8-.4z" />
                                     </svg>
@@ -227,15 +226,16 @@ const ImageViewer = ({ src, alt, className = '', align = 'center', maxWidthClass
                                         <ShareMenu src={src} />
                                     </div>
                                 </div>)}
+                                <div className="h-10 fixed bottom-2 right-0 flex items-center gap-2 max-lg:gap-1.5 p-4 z-[350]">
+                                    <div className='font-mono text-base text-foreground-accent'>{filename}</div>
+                                </div>
                             </motion.div>
-
-
                         </motion.div>
                     </motion.div>
                 )}
             </AnimatePresence>
 
-            {/* Original Static Image (always visible) */}
+            {/* ORIGINAL IMAGE (always visible) */}
             <motion.div
                 className={`flex flex-col w-fit h-full cursor-pointer relative ${alignClasses}`}
                 onClick={previewEnabled ? toggleFullscreen : undefined}

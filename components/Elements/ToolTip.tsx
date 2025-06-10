@@ -1,4 +1,4 @@
-import React, { ReactNode, useState } from 'react'
+import React, { ReactNode, useState } from 'react';
 
 interface ToolTipProps {
     content: ReactNode

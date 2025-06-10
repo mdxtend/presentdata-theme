@@ -1,20 +1,7 @@
 import Image from 'next/image';
-import { AnimatePresence, motion } from 'framer-motion';
-import { CheckIcon, CopyIcon, Settings, TextUnWrapIcon, TextWrapIcon } from '@/components/Presentdata/Icons';
-import React, {
-    useState,
-    useId,
-    ReactNode,
-    useRef,
-    useEffect,
-    useCallback,
-    useMemo,
-    memo
-} from 'react';
-import Tooltip from '@/components/Elements/ToolTip';
+import React, { useState, useId, ReactNode, useRef, useEffect, useCallback, useMemo, memo } from 'react';
 
 const COPY_SUCCESS_DURATION = 2000;
-const ANIMATION_DURATION = 0.2;
 
 export enum GroupType {
     SINGLE = 'single',
@@ -36,12 +23,6 @@ export interface GroupProps {
     'data-testid'?: string;
 }
 
-const tabAnimationVariants = {
-    initial: { opacity: 0, height: 0 },
-    animate: { opacity: 1, height: 'fit-content' },
-    exit: { opacity: 0, height: 0 }
-};
-
 export const Tab = memo<TabProps>(({ language, fileName, children }) => {
     return (
         <div>
@@ -52,7 +33,6 @@ export const Tab = memo<TabProps>(({ language, fileName, children }) => {
 
 Tab.displayName = 'Tab';
 
-// Custom hook for clipboard operations
 const useClipboard = () => {
     const [isCopied, setIsCopied] = useState(false);
 
@@ -64,11 +44,9 @@ const useClipboard = () => {
                 return false;
             }
 
-            // Modern clipboard API with fallback
             if (navigator.clipboard && navigator.clipboard.writeText) {
                 await navigator.clipboard.writeText(element.textContent || '');
             } else {
-                // Fallback for older browsers
                 const range = document.createRange();
                 range.selectNodeContents(element);
                 const selection = window.getSelection();
@@ -92,7 +70,6 @@ const useClipboard = () => {
     return { isCopied, copyToClipboard };
 };
 
-// Custom hook for outside click detection
 const useOutsideClick = (callback: () => void) => {
     const ref = useRef<HTMLDivElement>(null);
 
@@ -115,7 +92,7 @@ const useIsMobile = () => {
 
     useEffect(() => {
         const handleResize = () => setIsMobile(window.innerWidth <= 700);
-        handleResize(); // initialize on mount
+        handleResize();
         window.addEventListener('resize', handleResize);
         return () => window.removeEventListener('resize', handleResize);
     }, []);
@@ -123,7 +100,6 @@ const useIsMobile = () => {
     return isMobile;
 };
 
-// Main component with improved architecture
 export const Group = memo<GroupProps>(({
     fileName,
     language,
@@ -134,14 +110,8 @@ export const Group = memo<GroupProps>(({
 }) => {
     const uniqueId = useId();
     const [activeTab, setActiveTab] = useState(0);
-    const [isWrapped, setIsWrapped] = useState(false);
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-    const [isSettings, setIsSettings] = useState(false);
-    const [hasAnimated, setHasAnimated] = useState(false);
 
-    const { isCopied, copyToClipboard } = useClipboard();
-
-    // Normalize children to always be an array
     const childrenArray = useMemo(() =>
         React.Children.toArray(children).filter(React.isValidElement) as React.ReactElement<TabProps>[],
         [children]
@@ -151,31 +121,16 @@ export const Group = memo<GroupProps>(({
     const isMultipleFiles = childrenArray.length > (isMobile ? 1 : 4);
     const currentTab = childrenArray[activeTab];
 
-    // Close dropdown callback
     const closeDropdown = useCallback(() => setIsDropdownOpen(false), []);
-    const closeSettings = useCallback(() => setIsSettings(false), []);
     const dropdownRef = useOutsideClick(closeDropdown);
-    const settingsRef = useOutsideClick(closeSettings);
-
-    // Handlers with improved error handling
-    const handleCopy = useCallback(async () => {
-        const elementId = `tab-${activeTab}-${uniqueId}`;
-        await copyToClipboard(elementId);
-    }, [activeTab, uniqueId, copyToClipboard]);
-
-    const handleToggleWrap = useCallback(() => {
-        setIsWrapped(prev => !prev);
-    }, []);
 
     const handleTabChange = useCallback((index: number) => {
         if (index !== activeTab && index >= 0 && index < childrenArray.length) {
             setActiveTab(index);
             setIsDropdownOpen(false);
-            setHasAnimated(true);
         }
     }, [activeTab, childrenArray.length]);
 
-    // Keyboard navigation for accessibility
     const handleKeyDown = useCallback((event: React.KeyboardEvent, index?: number) => {
         if (event.key === 'Enter' || event.key === ' ') {
             event.preventDefault();
@@ -189,7 +144,6 @@ export const Group = memo<GroupProps>(({
         }
     }, [handleTabChange]);
 
-    // Error boundary for malformed children
     if (!currentTab) {
         console.error('Group component: No valid Tab children found');
         return (
@@ -199,14 +153,12 @@ export const Group = memo<GroupProps>(({
         );
     }
 
-    const iconSrc = `/packages/svgs/icons/${currentTab.props.language}.svg`;
-
     return (
         <div
             className={`relative flex flex-col gap-3  border-border-muted rounded-2xl group my-3 mt-5 ${className}`}
             data-testid={testId}
         >
-            {/* Header with file selector */}
+            {/* header with file selector */}
             <div className="flex flex-col items-start bg-background-darker relative">
                 <div className="flex items-center justify-between w-full max-h-10 h-full">
                     {isMultipleFiles ? (
@@ -294,10 +246,10 @@ export const Group = memo<GroupProps>(({
             </div>
 
             {/* Group content */}
-            <div className={`flex flex-col ${isWrapped ? 'wrap-text' : ''}`}>
+            <div className={`flex flex-col`}>
                 {childrenArray.map((child, index) =>
                     activeTab === index ? (
-                        <div key={`${child.props.fileName}-${index}`} id={`tab-${index}-${uniqueId}`} className="w-full" >
+                        <div key={`${child.props.fileName}-${index}`} id={`tab-group-${index}-${uniqueId}`} className="w-full" >
                             {child.props.children}
                         </div>
                     ) : null

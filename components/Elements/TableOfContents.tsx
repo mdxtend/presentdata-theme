@@ -1,13 +1,14 @@
-import Link from 'next/link'
-import { useRouter } from 'next/router'
+import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 const TableOfContents = ({ item }: { item: any }) => {
+    if (!item) return;
     const router = useRouter();
     return (
         <div className="overflow-hidden overflow-y-auto max-h-[calc(100vh-400px)]">
             <div className="relative">
                 <div className="font-mono text-xs uppercase text-foreground-highlight tracking-wide sticky top-0 w-full z-10">
-                    {item.toc.length > 0 && (<div className="bg-background w-full pb-2 px-6">On this Page</div>)}
+                    {item.toc?.length > 0 && (<div className="bg-background w-full pb-2 px-6">On this Page</div>)}
                 </div>
                 <ul className="px-6 mt-4 font-in text-xs font-sans">
                     {item?.toc?.map((heading: { slug: string; level: string; text: string }) => (

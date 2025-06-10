@@ -1,20 +1,9 @@
 import Image from 'next/image';
-import { AnimatePresence, motion } from 'framer-motion';
-import { CheckIcon, CopyIcon, Settings, TextUnWrapIcon, TextWrapIcon } from '@/components/Presentdata/Icons';
-import React, {
-    useState,
-    useId,
-    ReactNode,
-    useRef,
-    useEffect,
-    useCallback,
-    useMemo,
-    memo
-} from 'react';
 import Tooltip from '@/components/Elements/ToolTip';
+import React, { useState, useId, ReactNode, useRef, useEffect, useCallback, useMemo, memo } from 'react';
+import { CheckIcon, CopyIcon, Settings, TextUnWrapIcon, TextWrapIcon } from '@/components/Presentdata/Icons';
 
 const COPY_SUCCESS_DURATION = 2000;
-const ANIMATION_DURATION = 0.2;
 
 export enum CodeType {
     SINGLE = 'single',
@@ -36,12 +25,6 @@ export interface CodeProps {
     'data-testid'?: string;
 }
 
-const tabAnimationVariants = {
-    initial: { opacity: 0, height: 0 },
-    animate: { opacity: 1, height: 'fit-content' },
-    exit: { opacity: 0, height: 0 }
-};
-
 export const Tab = memo<TabProps>(({ language, fileName, children }) => {
     return (
         <div>
@@ -52,8 +35,7 @@ export const Tab = memo<TabProps>(({ language, fileName, children }) => {
 
 Tab.displayName = 'Tab';
 
-// Custom hook for clipboard operations
-const useClipboard = () => {
+export const useClipboard = () => {
     const [isCopied, setIsCopied] = useState(false);
 
     const copyToClipboard = useCallback(async (elementId: string) => {
@@ -64,11 +46,9 @@ const useClipboard = () => {
                 return false;
             }
 
-            // Modern clipboard API with fallback
             if (navigator.clipboard && navigator.clipboard.writeText) {
                 await navigator.clipboard.writeText(element.textContent || '');
             } else {
-                // Fallback for older browsers
                 const range = document.createRange();
                 range.selectNodeContents(element);
                 const selection = window.getSelection();
@@ -92,8 +72,7 @@ const useClipboard = () => {
     return { isCopied, copyToClipboard };
 };
 
-// Custom hook for outside click detection
-const useOutsideClick = (callback: () => void) => {
+export const useOutsideClick = (callback: () => void) => {
     const ref = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
@@ -110,12 +89,12 @@ const useOutsideClick = (callback: () => void) => {
     return ref;
 };
 
-const useIsMobile = () => {
+export const useIsMobile = () => {
     const [isMobile, setIsMobile] = useState(false);
 
     useEffect(() => {
         const handleResize = () => setIsMobile(window.innerWidth <= 700);
-        handleResize(); // initialize on mount
+        handleResize();
         window.addEventListener('resize', handleResize);
         return () => window.removeEventListener('resize', handleResize);
     }, []);
@@ -123,7 +102,6 @@ const useIsMobile = () => {
     return isMobile;
 };
 
-// Main component with improved architecture
 export const Code = memo<CodeProps>(({
     fileName,
     language,
@@ -137,11 +115,9 @@ export const Code = memo<CodeProps>(({
     const [isWrapped, setIsWrapped] = useState(false);
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const [isSettings, setIsSettings] = useState(false);
-    const [hasAnimated, setHasAnimated] = useState(false);
 
     const { isCopied, copyToClipboard } = useClipboard();
 
-    // Normalize children to always be an array
     const childrenArray = useMemo(() =>
         React.Children.toArray(children).filter(React.isValidElement) as React.ReactElement<TabProps>[],
         [children]
@@ -151,13 +127,11 @@ export const Code = memo<CodeProps>(({
     const isMultipleFiles = childrenArray.length > (isMobile ? 1 : 4);
     const currentTab = childrenArray[activeTab];
 
-    // Close dropdown callback
     const closeDropdown = useCallback(() => setIsDropdownOpen(false), []);
     const closeSettings = useCallback(() => setIsSettings(false), []);
     const dropdownRef = useOutsideClick(closeDropdown);
     const settingsRef = useOutsideClick(closeSettings);
 
-    // Handlers with improved error handling
     const handleCopy = useCallback(async () => {
         const elementId = `tab-${activeTab}-${uniqueId}`;
         await copyToClipboard(elementId);
@@ -171,11 +145,9 @@ export const Code = memo<CodeProps>(({
         if (index !== activeTab && index >= 0 && index < childrenArray.length) {
             setActiveTab(index);
             setIsDropdownOpen(false);
-            setHasAnimated(true);
         }
     }, [activeTab, childrenArray.length]);
 
-    // Keyboard navigation for accessibility
     const handleKeyDown = useCallback((event: React.KeyboardEvent, index?: number) => {
         if (event.key === 'Enter' || event.key === ' ') {
             event.preventDefault();
@@ -189,7 +161,6 @@ export const Code = memo<CodeProps>(({
         }
     }, [handleTabChange]);
 
-    // Error boundary for malformed children
     if (!currentTab) {
         console.error('Code component: No valid Tab children found');
         return (
@@ -206,7 +177,7 @@ export const Code = memo<CodeProps>(({
             className={`relative bg-background-codeblock border border-border-muted rounded-2xl group my-3 ${className}`}
             data-testid={testId}
         >
-            {/* Header with file selector */}
+            {/* header with file selector */}
             <div className="flex flex-col items-start bg-background-darker relative">
                 <div className="flex items-center justify-between w-full max-h-10 h-full">
                     {isMultipleFiles ? (
@@ -308,7 +279,7 @@ export const Code = memo<CodeProps>(({
             </div>
 
             {/* Control buttons */}
-            <div className="sticky top-24 max-lg:top-5 w-full flex pointer-events-none">
+            <div className="sticky z-10 top-24 max-lg:top-5 w-full flex pointer-events-none">
                 <div className="absolute bottom-1 max-lg:bottom-0 right-0 m-0.5 mx-1.5 px-2 flex gap-2 items-center bg-background-codeblock h-[2rem] pointer-events-auto rounded-lg">
                     <Tooltip content={isCopied ? "Copied!" : "Copy"}>
                         <button
@@ -319,12 +290,10 @@ export const Code = memo<CodeProps>(({
                             {isCopied ? (
                                 <>
                                     <CheckIcon className="text-primary w-5 h-5" />
-                                    {/* <span className="text-xs text-primary">Copied!</span> */}
                                 </>
                             ) : (
                                 <>
                                     <CopyIcon className="text-foreground w-5 h-5" />
-                                    {/* <span className="text-xs">Copy code</span> */}
                                 </>
                             )}
                         </button>
@@ -339,12 +308,10 @@ export const Code = memo<CodeProps>(({
                             {isWrapped ? (
                                 <>
                                     <TextUnWrapIcon className="text-foreground w-5 h-5" />
-                                    {/* <span className="text-xs">Unwrap</span> */}
                                 </>
                             ) : (
                                 <>
                                     <TextWrapIcon className="text-foreground w-5 h-5" />
-                                    {/* <span className="text-xs">Wrap</span> */}
                                 </>
                             )}
                         </button>
@@ -396,28 +363,14 @@ export const Code = memo<CodeProps>(({
             </div>
 
             {/* Code content */}
-            <div
-                className={`flex flex-col items-start bg-background-primary group overflow-x-auto overflow-y-hidden rounded-b-2xl ${isWrapped ? 'wrap-text' : ''
-                    }`}
-            >
-                {/* <AnimatePresence mode="wait"> */}
+            <div className={`flex flex-col items-start bg-background-primary group overflow-x-auto overflow-y-hidden rounded-b-2xl ${isWrapped ? 'wrap-text' : ''}`}>
                 {childrenArray.map((child, index) =>
                     activeTab === index ? (
-                        <div
-                            key={`${child.props.fileName}-${index}`}
-                            // variants={tabAnimationVariants}
-                            // initial={hasAnimated ? "initial" : false}
-                            // animate="animate"
-                            // exit={hasAnimated ? "exit" : false}
-                            // transition={{ duration: ANIMATION_DURATION, ease: 'linear' }}
-                            className="w-full"
-                            id={`tab-${index}-${uniqueId}`}
-                        >
+                        <div className="w-full" key={`${child.props.fileName}-${index}`} id={`tab-${index}-${uniqueId}`}>
                             {child.props.children}
                         </div>
                     ) : null
                 )}
-                {/* </AnimatePresence> */}
             </div>
         </div>
     );

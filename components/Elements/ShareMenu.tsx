@@ -1,10 +1,7 @@
-'use client'
-
 import { useState } from 'react'
-import { Copy } from 'lucide-react'
 import { StaticImageData } from 'next/image';
 
-const ShareMenu = ({src}:{src?: string | StaticImageData;}) => {
+const ShareMenu = ({ src }: { src?: string | StaticImageData; }) => {
   const [copied, setCopied] = useState(false)
   const [showEmbed, setShowEmbed] = useState(false)
 

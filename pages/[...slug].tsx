@@ -1,25 +1,20 @@
-import { GetStaticPaths, GetStaticProps } from 'next'
-import { useRouter } from 'next/router'
-import presentData from '@/public/data/presentdata.config'
-import Head from 'next/head'
-import * as Contentlayer from 'contentlayer/generated'
-import { useEffect, useState } from 'react'
-import Link from 'next/link'
-import Image from 'next/image'
-
-// You need to import or define these components/utilities used in DocsPage
-
+import Head from 'next/head';
+import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
 import { format, parseISO } from 'date-fns';
-import RenderMDX from '@/components/Presentdata/RenderMDX';
-import Feedback from '@/components/Elements/Feedback';
+import { GetStaticPaths, GetStaticProps } from 'next';
+import * as Contentlayer from 'contentlayer/generated';
+
+import ListItems from '@/components/Elements/ListIems';
 import Breadcrumb from '@/components/Elements/Breadcrumb';
-// import { allPublications, type Publication } from 'contentlayer/generated';
-import { AddBookMark, CommentBox, IosShareSVG, LinkNewWindow, OptionsSVG, ReadTimeSVG } from '@/components/Presentdata/Icons';
-import TableOfContents from '@/components/Elements/TableOfContents'
-// Assuming allPublications is imported or accessible here for the Explore section
+import LinkButton from '@/components/Elements/LinkButton';
+import RenderMDX from '@/components/Presentdata/RenderMDX';
+import presentData from '@/public/data/presentdata.config';
+import TableOfContents from '@/components/Elements/TableOfContents';
+import { IosShareSVG, OptionsSVG, ReadTimeSVG, UpArrow } from '@/components/Presentdata/Icons';
 
 
-const addOrdinalSuffix = (day: number) => {
+const addOrdinalSuffix = (day: number) => {w
   if (day > 3 && day < 21) return `${day}th`;
   switch (day % 10) {
     case 1: return `${day}st`;
@@ -37,25 +32,52 @@ const FormattedDate = (publishedAt: string) => {
   return formatted;
 };
 
-const formatAuthorName = (name: string): string => {
-  return name.toLowerCase().replace(/\s+/g, '_');
-}
-
-const formatLinkAuthorName = (name: string): string => {
-  return name.toLowerCase().replace(/\s+/g, '');
-}
-
-
-
 export default function Page({ page, doc, siteMetaData }: { page: any, doc: any, siteMetaData: any }) {
   const router = useRouter()
-  const [hovered, setHovered] = useState<string | null>(null)
+  const [showScrollToTop, setShowScrollToTop] = useState(false);
+
+  const typeName = page.pageType?.name
+  const key = `all${typeName}s` as keyof typeof Contentlayer
+  const documents = Contentlayer[key] as unknown as any[] || []
+  const docPage = documents.find(d => d._id === `${typeName.toLowerCase()}s/index.mdx`);
 
   if (router.isFallback) return <div>Loading...</div>
+  if (!page && !docPage) return <div>Create {typeName}/index.mdx</div>
   if (!page && !doc) return <div>Not Found</div>
 
-  if (doc) {
-    // Render the DocsPage UI when doc is available
+
+  if (page || docPage) {
+    // Original page UI fallback
+    return (
+      <div className="min-h-[calc(100vh-8rem)] flex flex-col gap-2 p-4 py-10 max-lg:py-5">
+        <Head>
+          <title>{`${page?.title ?? docPage?.title ?? 'Untitled'} | ${siteMetaData?.title ?? 'Site'}`}</title>
+          <meta name="description" content={page?.description ?? docPage?.description ?? siteMetaData?.description ?? ''} />
+          <meta property="og:title" content={`${page?.title ?? docPage?.title ?? 'Untitled'} | ${siteMetaData?.title ?? 'Site'}`} />
+          <meta property="og:description" content={page?.description ?? docPage?.description ?? siteMetaData?.description ?? ''} />
+          <meta property="og:type" content="website" />
+          <meta property="og:url" content={`https://yoursite.com/${page?.slug ?? docPage?.url ?? ''}`} />
+          <link rel="canonical" href={`https://yoursite.com/${page?.slug ?? docPage?.url ?? ''}`} />
+        </Head>
+
+        <h1 className="text-5xl max-lg:text-2xl font-serif mb-3">{page.title}</h1>
+
+        {docPage && (<section>
+          <RenderMDX content={docPage} className="mt-10 mb-20" />
+        </section>)}
+
+        {page.sectionButton && (
+          <LinkButton title={page.sectionButton.title} href={page.sectionButton.link} downloadable />
+        )}
+
+        {page.pageType && (
+          <ListItems items={documents} />
+        )}
+      </div>
+    )
+  }
+
+  else if (doc) {
     useEffect(() => {
       const { hash } = window.location
       if (!hash) return
@@ -70,6 +92,29 @@ export default function Page({ page, doc, siteMetaData }: { page: any, doc: any,
       })
     }, [])
 
+    const handleScroll = () => {
+      if (window.scrollY > 80) {
+        setShowScrollToTop(true);
+      } else {
+        setShowScrollToTop(false);
+      }
+    };
+
+    const scrollToTop = () => {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    };
+
+    useEffect(() => {
+      window.addEventListener('scroll', handleScroll);
+      return () => {
+        window.removeEventListener('scroll', handleScroll);
+      };
+    }, []);
+
+
     return (
       <article>
         <Head>
@@ -79,6 +124,16 @@ export default function Page({ page, doc, siteMetaData }: { page: any, doc: any,
           <meta property="og:description" content={doc?.description || siteMetaData.description || ''} />
           <meta property="og:type" content="article" />
         </Head>
+
+        {showScrollToTop && (
+          <button
+            onClick={scrollToTop}
+            className='fixed z-50 max-w-7xl mx-auto bottom-5 right-5 p-3 border border-border text-foreground-accent rounded-full bg-background-secondary cursor-pointer'
+            aria-label="Scroll to top"
+          >
+            <UpArrow className='w-5 h-5' />
+          </button>
+        )}
 
         <div className="flex justify-between">
           <div className="flex justify-center max-w-[70%] max-lg:max-w-full mt-10 max-lg:mt-5">
@@ -123,79 +178,12 @@ export default function Page({ page, doc, siteMetaData }: { page: any, doc: any,
     )
   }
 
-  // Original page UI fallback
-  return (
-    <div className="p-8 space-y-6">
-      <Head>
-        <title>{`${page?.title} | ${siteMetaData.title}`}</title>
-        <meta name="description" content={page?.description || siteMetaData.description || ''} />
-        <meta property="og:title" content={`${page?.title} | ${siteMetaData.title}`} />
-        <meta property="og:description" content={page?.description || siteMetaData.description || ''} />
-        <meta property="og:type" content="website" />
-      </Head>
+  return <div>Create {typeName}/index.mdx</div>
 
-      <h1 className="text-3xl font-bold">{page?.title || doc?.title}</h1>
-      <div>{doc?.code?.body}</div>
-
-      {page?.downloadable && (
-        <a href={page?.downloadLink} className="text-blue-500 underline" download>
-          Download CV
-        </a>
-      )}
-
-      {page?.sections.map((section: any, index: number) => (
-        <div key={index}>
-          <h2 className="text-xl font-semibold">{section.sectionTitle}</h2>
-
-          {section.sectionType === 'list' && (
-            <ul className="list-disc ml-5">
-              {section.items.map((item: any, idx: number) => (
-                <li key={idx}>
-                  {item.code && <strong>{item.code}:</strong>} {item.title} ({item.year}) – {item.mode}
-                </li>
-              ))}
-            </ul>
-          )}
-
-          {section.sectionType === 'cards' && (
-            <div className="grid grid-cols-2 gap-4 mt-2">
-              {section.items.map((item: any, idx: number) => (
-                <div key={idx} className="p-4 border rounded">
-                  <div className="font-semibold">{item.name}</div>
-                  <div className="text-sm">
-                    {item.level} – {item.status}
-                  </div>
-                  <div className="text-sm">{item.project}</div>
-                </div>
-              ))}
-            </div>
-          )}
-
-          {section.sectionType === 'media' && (
-            <div className="space-y-4 mt-2">
-              {section.items.map((item: any, idx: number) => (
-                <div key={idx} className="border p-4">
-                  <div className="text-lg font-semibold">{item.title}</div>
-                  <div className="text-sm mb-2">{item.event}</div>
-                  <iframe src={item.videoUrl} className="w-full aspect-video" allowFullScreen />
-                  {item.slidesLink && (
-                    <a href={item.slidesLink} className="text-blue-500 underline" target="_blank" rel="noreferrer">
-                      View Slides
-                    </a>
-                  )}
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
-      ))}
-    </div>
-  )
 }
 
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  // Collect paths from presentData.pages
   const generatePagePaths = (page: any, base: string[] = []) => {
     const path = [...base, page.slug]
     let paths = [{ params: { slug: path } }]
@@ -209,7 +197,6 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
   const pagePaths = presentData.pages.flatMap((page: any) => generatePagePaths(page))
 
-  // Collect paths from all Contentlayer docs
   const docPaths = Object.entries(Contentlayer)
     .filter(([key, value]) => key.startsWith('all') && Array.isArray(value))
     .flatMap(([_, docs]) =>
@@ -224,11 +211,11 @@ export const getStaticPaths: GetStaticPaths = async () => {
   }
 }
 
+
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   const slugParts = params?.slug as string[]
   const flattened = slugParts.join('/')
 
-  // Try to find a page from presentData.pages
   const findPage = (pages: any[], parts: string[]): any => {
     for (const page of pages) {
       if (page.slug === parts[0]) {
@@ -241,21 +228,17 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 
   const page = findPage(presentData.pages, slugParts)
 
-  // Try to find a doc from Contentlayer
   const getAllDocs = () =>
     Object.entries(Contentlayer)
       .filter(([key, value]) => key.startsWith('all') && Array.isArray(value))
       .flatMap(([_, docs]) => docs as any[])
 
-  // If a page exists and defines a custom path base
   const docPath = page?.pageType?.path
     ? `${page.pageType.path}/${flattened}`
     : flattened
 
   const doc = getAllDocs().find((d) => d._raw.flattenedPath === docPath || d._raw.flattenedPath === flattened) || null
-
-  // Return whichever matched
-  //   if (!page && !doc) return { notFound: true }
+  if (!page && !doc) return { notFound: true }
 
   return {
     props: {

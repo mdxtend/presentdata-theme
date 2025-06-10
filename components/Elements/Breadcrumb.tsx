@@ -1,5 +1,5 @@
-import Link from 'next/link'
-import { useRouter } from 'next/router'
+import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 const Breadcrumb = () => {
     const router = useRouter()
@@ -22,7 +22,7 @@ const Breadcrumb = () => {
     }
 
     return (
-        <nav aria-label="Breadcrumb" className="my-4 line-clamp-1 whitespace-nowrap min-h-6">
+        <nav aria-label="Breadcrumb" className="my-4 line-clamp-1 min-h-6">
             <ol className="flex flex-wrap items-center text-foreground-accent font-medium">
                 {items.map((item, index) => (
                     <li key={item.href} className="flex items-center">

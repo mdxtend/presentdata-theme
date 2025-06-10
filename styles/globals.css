@@ -86,8 +86,8 @@
 } */
 
 * {
-  scrollbar-width: thin;
-  scrollbar-color: var(--scrollbar-color) var(--background);
+  /* scrollbar-width: thin; */
+  scrollbar-color: var(--scrollbar-color) transparent;
 }
 
 html {

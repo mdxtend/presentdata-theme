@@ -93,25 +93,25 @@ const computedFields: ComputedFields = {
   },
 }
 
-// const Publication = defineDocumentType(() => ({
-//   name: "Publication",
-//   filePathPattern: `publications/**/*.mdx`,
-//   contentType: "mdx",
-//   fields: {
-//     title: { type: "string", required: false },
-//     preview: { type: "string", required: false },
-//     publishedAt: { type: 'date', required: false },
-//     updatedAt: { type: 'date', required: false },
-//     description: { type: 'string', required: false },
-//     image: { type: 'string', required: false },
-//     isPublished: { type: 'boolean', default: false },
-//     author: { type: 'string', required: false },
-//     username: { type: 'string', required: false },
-//     github: { type: 'string', required: false },
-//     tags: { type: 'list', of: { type: 'string' }, required: false },
-//   },
-//   computedFields,
-// }))
+const Profile = defineDocumentType(() => ({
+  name: "Profile",
+  filePathPattern: `profile/**/*.mdx`,
+  contentType: "mdx",
+  fields: {
+    title: { type: "string", required: false },
+    preview: { type: "string", required: false },
+    publishedAt: { type: 'date', required: false },
+    updatedAt: { type: 'date', required: false },
+    description: { type: 'string', required: false },
+    image: { type: 'string', required: false },
+    isPublished: { type: 'boolean', default: false },
+    author: { type: 'string', required: false },
+    username: { type: 'string', required: false },
+    github: { type: 'string', required: false },
+    tags: { type: 'list', of: { type: 'string' }, required: false },
+  },
+  computedFields,
+}))
 
 const PresentDataDocumentTypes = presentData.pages
   .filter((page): page is typeof page & { pageType: PageType } => Boolean(page.pageType))
@@ -141,7 +141,7 @@ const codeOptions = {
 export default makeSource({
   contentDirPath: './public/data',
   disableImportAliasWarning: true,
-  documentTypes: [...PresentDataDocumentTypes],
+  documentTypes: [Profile, ...PresentDataDocumentTypes],
   mdx: {
     remarkPlugins: [remarkGfm],
     rehypePlugins: [

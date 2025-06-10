@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react'
-import { useRouter } from 'next/router'
-import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
+import { motion } from 'framer-motion';
+import { useRouter } from 'next/router';
+import React, { useEffect, useState } from 'react';
 
 export interface PDFViewerProps {
   src: string
