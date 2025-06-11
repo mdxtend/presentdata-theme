@@ -283,7 +283,7 @@ export const Code = memo<CodeProps>(({
                 <div className="absolute bottom-1 max-lg:bottom-0 right-0 m-0.5 mx-1.5 px-2 flex gap-2 items-center bg-background-codeblock h-[2rem] pointer-events-auto rounded-lg">
                     <Tooltip content={isCopied ? "Copied!" : "Copy"}>
                         <button
-                            className="h-[2rem] w-fit flex items-center justify-center gap-1 border border-background-codeblock bg-background-codeblock focus:outline-none transition-colors rounded-lg"
+                            className="h-[2rem] w-fit flex items-center justify-center gap-1 border border-background-codeblock bg-background-codeblock focus:outline-none transition-colors rounded-lg cursor-pointer"
                             onClick={handleCopy}
                             aria-label="Copy code to clipboard"
                         >
@@ -301,7 +301,7 @@ export const Code = memo<CodeProps>(({
 
                     <Tooltip content={isWrapped ? "Unwrap" : "Wrap"}>
                         <button
-                            className="h-[2rem] w-fit flex items-center justify-center gap-1 border border-background-codeblock bg-background-codeblock focus:outline-none transition-colors rounded-lg"
+                            className="h-[2rem] w-fit flex items-center justify-center gap-1 border border-background-codeblock bg-background-codeblock focus:outline-none transition-colors rounded-lg cursor-pointer"
                             onClick={handleToggleWrap}
                             aria-label={isWrapped ? 'Unwrap text' : 'Wrap text'}
                         >
@@ -320,7 +320,7 @@ export const Code = memo<CodeProps>(({
                     <div ref={settingsRef} className="relative w-fit">
                         <Tooltip content={"settings"}>
                             <button
-                                className="h-[2rem] w-fit flex items-center justify-center gap-1 border border-background-codeblock bg-background-codeblock focus:outline-none transition-colors rounded-lg"
+                                className="h-[2rem] w-fit flex items-center justify-center gap-1 border border-background-codeblock bg-background-codeblock focus:outline-none transition-colors rounded-lg cursor-pointer"
                                 onClick={() => setIsSettings(!isSettings)}
                                 aria-label="Code Settings"
                             >

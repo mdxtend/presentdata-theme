@@ -184,7 +184,7 @@ export const Group = memo<GroupProps>(({
                                 </svg>
                                 <span className="flex items-center gap-2">
                                     <span className="text-xs font-mono text-foreground-accent font-medium">
-                                        {currentTab.props.fileName}
+                                        {currentTab.props.fileName || `Tab`}
                                     </span>
                                 </span>
                             </button>
@@ -205,15 +205,8 @@ export const Group = memo<GroupProps>(({
                                                 role="option"
                                                 aria-selected={activeTab === index}
                                             >
-                                                <Image
-                                                    src={`/packages/svgs/icons/${child.props.language}.svg`}
-                                                    alt={`${child.props.language} icon`}
-                                                    width={18}
-                                                    height={18}
-                                                    className="!m-0"
-                                                />
                                                 <span className={`text-xs font-mono font-medium ${activeTab === index ? "text-foreground" : "text-foreground-accent "}`}>
-                                                    {child.props.fileName}
+                                                    {child.props.fileName || `Tab ${index}`}
                                                 </span>
                                             </button>
                                         </div>
@@ -234,7 +227,7 @@ export const Group = memo<GroupProps>(({
                                     >
                                         <div className="flex items-center p-1.5 px-2.5 gap-1">
                                             <span className={`text-xs font-mono font-medium w-full ${activeTab === index ? "text-foreground" : "text-foreground-accent "}`}>
-                                                {fileName}
+                                                {fileName || `Tab ${index}`}
                                             </span>
                                         </div>
                                     </div>

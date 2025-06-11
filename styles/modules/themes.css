@@ -10,20 +10,20 @@
     --background-primary:   #0d0d0f;
     --background-secondary: #1a1a1c;
     --background-tertiary:  #222226;
-    --background-code:      #0e0e10;
+    --background-code:      #2a2b2c;
     --background-codeblock: #18181b;
     --background-scrollbar: #2a2a2e;
 
     /** TEXT COLORS **/
     --foreground:           #e6e6e6;
-    --foreground-muted:     #a0a0a0;
-    --foreground-highlight: #66c1ff; /* For citations, links, etc. */
-    --foreground-accent:    #a5a8aa;
+    --foreground-muted:     #707070;
+    --foreground-highlight: #60a5fa; /* For citations, links, etc. */
+    --foreground-accent:    #b5b8bb;
 
     /** PRIMARY & SECONDARY COLORS **/
-    --primary:          #3faaff; /* Soft academic blue */
-    --primary-bright:   #66c1ff;
-    --primary-muted:    #2b7db8;
+    --primary:          #2b7fff; /* Soft academic blue */
+    --primary-bright:   #2fafff;
+    --primary-muted:    #006dbb;
     --secondary:        #f2b94f; /* Accent for buttons, callouts */
     --secondary-bright: #ffd272;
     --secondary-muted:  #c99a3e;

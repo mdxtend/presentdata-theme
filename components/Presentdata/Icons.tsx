@@ -40,11 +40,18 @@ export const Close = ({ className }: IconProps) => (
 );
 
 export const Menu = ({ className }: IconProps) => (
-    <svg className={`${className}`} width="200px" height="200px" stroke="currentColor" fill="currentColor" strokeWidth="0" viewBox="0 0 12 12" enableBackground="new 0 0 12 12" xmlns="http://www.w3.org/2000/svg">
+    <svg className={`${className}`} width="20px" height="20px" stroke="currentColor" fill="currentColor" strokeWidth="0" viewBox="0 0 12 12" enableBackground="new 0 0 12 12" xmlns="http://www.w3.org/2000/svg">
         <rect fill="currentColor" height="1" width="11" x="0.5" y="5.5"></rect>
         <rect fill="currentColor" height="1" width="11" x="0.5" y="2.5"></rect>
         <rect fill="currentColor" height="1" width="11" x="0.5" y="8.5"></rect>
     </svg>
+);
+
+export const Quote = ({ className }: IconProps) => (
+    <svg className={`${className}`} width="20px" height="20px" viewBox="0 0 17 17" xmlns="http://www.w3.org/2000/svg" fill="currentColor">
+        <path d="M1 14c-.55 0-1-.43-1-1s.45-1 1-1c2.76 0 4-1.2 4-3.88V7H1.56C.73 7 .05 6.3.05 5.47V1.51C.05.68.73 0 1.56 0h3.93C6.32 0 7 .68 7 1.51v6.61C7 11.4 4.86 14 1 14zM10 14c-.55 0-1-.43-1-1s.45-1 1-1c2.76 0 4-1.2 4-3.88V7h-3.47C9.7 7 9.02 6.27 9.02 5.44V1.51C9.02.68 9.7 0 10.53 0h3.95C15.32 0 16 .68 16 1.51v6.61c0 3.78-2.14 5.88-6 5.88z" />
+    </svg>
+
 );
 
 export const Settings = ({ className }: IconProps) => (

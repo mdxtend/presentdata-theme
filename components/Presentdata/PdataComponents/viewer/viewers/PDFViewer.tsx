@@ -1,7 +1,7 @@
-import Link from 'next/link';
-import { motion } from 'framer-motion';
-import { useRouter } from 'next/router';
-import React, { useEffect, useState } from 'react';
+import Link from 'next/link'
+import { motion } from 'framer-motion'
+import { useRouter } from 'next/router'
+import React, { useEffect, useState } from 'react'
 
 export interface PDFViewerProps {
   src: string
@@ -12,66 +12,69 @@ export interface PDFViewerProps {
 const PDFViewer: React.FC<PDFViewerProps> = ({ src, title = 'PDF Document', className = '' }) => {
   const router = useRouter()
   const [isOpen, setIsOpen] = useState(false)
+  const [hasError, setHasError] = useState(false)
+  const [validatedSrc, setValidatedSrc] = useState<string | null>(null)
 
-  const closeOpen = () => {
-    setIsOpen(false);
-  }
+  const closeOpen = () => setIsOpen(false)
+
+  // resolve full src path
+  useEffect(() => {
+    let finalSrc = src
+    if (!(src.startsWith('http') || src.startsWith('data:'))) {
+      let basePath = router.asPath.split('#')[0]
+      let base = '/data' + basePath
+      if (!base.endsWith('/')) base += '/'
+      const cleanSrc = src.startsWith('/') ? src.slice(1) : src
+      finalSrc = base + cleanSrc
+    }
+
+    // validate the PDF path
+    fetch(finalSrc, { method: 'HEAD' })
+      .then(res => {
+        if (!res.ok) throw new Error('Invalid PDF')
+        setValidatedSrc(finalSrc)
+        setHasError(false)
+      })
+      .catch(() => {
+        setHasError(true)
+        setValidatedSrc(null)
+      })
+  }, [src, router.asPath])
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') closeOpen();
+      if (e.key === 'Escape') closeOpen()
     }
-
-    if (isOpen) {
-      window.addEventListener('keydown', handleKeyDown)
-    }
-    return () => {
-      window.removeEventListener('keydown', handleKeyDown)
-    }
+    if (isOpen) window.addEventListener('keydown', handleKeyDown)
+    return () => window.removeEventListener('keydown', handleKeyDown)
   }, [isOpen])
-
-  let resolvedSrc = src;
-  if (typeof src === 'string') {
-    if (src.startsWith('http') || src.startsWith('data:')) {
-      resolvedSrc = src;
-    } else {
-      let basePath = router.asPath.split('#')[0];
-      let base = '/data' + basePath;
-      if (!base.endsWith('/')) base += '/';
-      const cleanSrc = src.startsWith('/') ? src.slice(1) : src;
-      resolvedSrc = base + cleanSrc;
-    }
-  }
 
   return (
     <>
-      <div className={`h-12 w-fit max-lg:h-10 my-4 flex  items-center justify-center text-foreground-accent hover:text-foreground font-mono uppercase text-sm max-lg:text-xs bg-background-secondary border border-border hover:bg-background-tertiary hover:border-border-tertiary rounded-xl cursor-pointer group overflow-hidden ${className}`}>
+      <div className={`h-12 w-fit max-lg:h-10 my-4 flex items-center justify-center text-foreground-accent hover:text-foreground font-mono uppercase text-sm max-lg:text-xs bg-background-secondary border border-border hover:bg-background-tertiary hover:border-border-tertiary rounded-xl cursor-pointer group overflow-hidden ${className}`}>
         <button
           onClick={() => setIsOpen(true)}
-          className='py-3 p-1 pl-4 cursor-pointer rounded-xl'
+          className="py-3 p-1 pl-4 cursor-pointer rounded-xl"
           aria-label={`Open ${title} preview`}
         >
           {title}
         </button>
-        <Link href={resolvedSrc} target='_blank' className='py-3 p-1 pr-4 text-foreground-accent no-underline hover:underline hover:underline-offset-4 hover:text-foreground'>[Preview]</Link>
+        <Link
+          href={validatedSrc || '#'}
+          target="_blank"
+          className="py-3 p-1 pr-4 text-foreground-accent no-underline hover:underline hover:underline-offset-4 hover:text-foreground"
+        >
+          [Preview]
+        </Link>
       </div>
 
       {isOpen && (
         <motion.div
           className="fixed inset-0 flex flex-col z-[1000]"
-          initial={{
-            backdropFilter: "blur(0px)",
-            backgroundColor: 'rgba(0, 0, 0, 0)',
-          }}
-          animate={{
-            backdropFilter: "blur(20px)",
-            backgroundColor: 'rgba(0, 0, 0, 0.5)',
-          }}
-          exit={{
-            backdropFilter: "blur(0px)",
-            backgroundColor: 'rgba(0, 0, 0, 0)',
-          }}
-          transition={{ duration: 0.3, ease: "easeInOut" }}
+          initial={{ backdropFilter: 'blur(0px)', backgroundColor: 'rgba(0, 0, 0, 0)' }}
+          animate={{ backdropFilter: 'blur(20px)', backgroundColor: 'rgba(0, 0, 0, 0.5)' }}
+          exit={{ backdropFilter: 'blur(0px)', backgroundColor: 'rgba(0, 0, 0, 0)' }}
+          transition={{ duration: 0.3, ease: 'easeInOut' }}
           style={{ WebkitBackdropFilter: 'blur(0px)' }}
           role="dialog"
           aria-modal="true"
@@ -96,13 +99,20 @@ const PDFViewer: React.FC<PDFViewerProps> = ({ src, title = 'PDF Document', clas
               </svg>
             </button>
           </div>
-          <iframe
-            src={resolvedSrc}
-            title={title}
-            className="flex-1 w-full"
-            style={{ border: 'none' }}
-            loading="lazy"
-          />
+
+          {hasError ? (
+            <div className="flex items-center justify-center w-full h-full p-10 whitespace-nowrap border border-border rounded bg-background-secondary text-sm font-mono uppercase text-red-500">
+              Failed to load content
+            </div>
+          ) : (
+            <iframe
+              src={validatedSrc || ''}
+              title={title}
+              className="flex-1 w-full"
+              style={{ border: 'none' }}
+              loading="lazy"
+            />
+          )}
         </motion.div>
       )}
     </>

@@ -1,13 +1,21 @@
 /* DOCUMENTATION STYLES */
 
-
 /** HEADING # LINK STYLES **/
 
 .docs-slug {
-  h1, h2, h3, h4, h5, h6 {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     @apply relative font-mono tracking-tight;
     word-spacing: -0.2em;
   }
+
+  /* ul {
+    @apply !mt-0;
+  } */
 }
 
 .word-space-tight {
@@ -15,11 +23,21 @@
   word-spacing: -0.2em;
 }
 
-h1 .anchor, h2 .anchor, h3 .anchor, h4 .anchor, h5 .anchor, h6 .anchor {
+h1 .anchor,
+h2 .anchor,
+h3 .anchor,
+h4 .anchor,
+h5 .anchor,
+h6 .anchor {
   @apply absolute left-[-1.5rem] max-lg:relative max-lg:translate-y-1 max-lg:px-2 max-lg:opacity-40 max-lg:left-auto top-1/2 -translate-y-1/2 opacity-0 transition-opacity inline-flex items-center hover:!opacity-100 h-full;
 }
 
-h1.group-heading:hover .anchor, h2.group-heading:hover .anchor, h3.group-heading:hover .anchor, h4.group-heading:hover .anchor, h5.group-heading:hover .anchor, h6.group-heading:hover .anchor {
+h1.group-heading:hover .anchor,
+h2.group-heading:hover .anchor,
+h3.group-heading:hover .anchor,
+h4.group-heading:hover .anchor,
+h5.group-heading:hover .anchor,
+h6.group-heading:hover .anchor {
   @apply opacity-40;
 }
 
@@ -37,7 +55,6 @@ h6 {
   letter-spacing: 1.2px;
 }
 
-
 /** CODE BLOCKS **/
 
 [data-rehype-pretty-code-figure] {
@@ -49,5 +66,126 @@ h6 {
     @apply text-wrap;
     /* white-space: pre-wrap;
     word-break: break-word; */
+  }
+}
+
+code::before,
+code::after {
+  content: "" !important;
+  background-color: var(--color-background-codeblock);
+}
+
+code:where([data-theme="default"]) {
+  @apply !bg-background-code !text-sm !font-normal font-mono px-2 py-1 rounded-lg tracking-wide border border-border-muted;
+  background-color: var(--color-background-codeblock);
+}
+
+.redermdx-table {
+  @apply text-foreground font-normal;
+
+  /* table {
+    @apply bg-white;
+  } */
+
+  thead {
+    @apply bg-background-secondary flex justify-between;
+  }
+
+  tr {
+    @apply border-b border-background-code w-full justify-evenly text-left flex gap-px bg-background-code text-sm;
+  }
+  tr:first-child {
+    @apply border-t w-full justify-evenly text-left flex gap-px bg-background-code text-sm;
+  }
+  tr:last-child {
+    @apply border-0 w-full justify-evenly text-left flex gap-px bg-background-code text-sm;
+  }
+
+  th {
+    @apply flex justify-start items-center w-full p-3 py-2 bg-background-secondary text-sm;
+  }
+
+  td {
+    @apply flex justify-start items-center w-full p-3 py-2 bg-background text-sm;
+    code:not([data-theme="default"]) {
+      @apply !text-sm !font-thin font-mono px-2 py-[0.1rem] rounded tracking-wide;
+      background-color: var(--background-code);
+    }
+  }
+}
+
+input[type="checkbox"] {
+  @apply border border-border rounded bg-background mb-0.5;
+}
+
+input[type="checkbox"][checked] {
+  @apply border bg-primary;
+}
+
+@layer utilities {
+  .prose ul > li::marker {
+    color: var(--color-primary-bright);
+    font-weight: bold;
+    font-size: 1rem;
+  }
+
+  .prose ol > li {
+    list-style-type: decimal;
+  }
+  .prose ol > li::marker {
+    color: var(--color-primary-bright);
+    font-weight: bold;
+    font-size: 1rem;
+  }
+
+  .prose blockquote {
+    padding: 0.25rem;
+    padding-left: 1.5rem;
+    border-left: 4px solid var(--color-primary-bright);
+    font-style: normal;
+    @apply bg-background-secondary;
+
+    .group-heading {
+      @apply mt-4 font-bold;
+    }
+    .group-heading > .anchor {
+      @apply !hidden;
+    }
+  }
+  .prose blockquote p {
+    @apply font-normal;
+  }
+  .prose blockquote p::before {
+    @apply text-foreground-muted pr-px;
+    content: "";
+    /* content: "❝"; */
+    left: -2.5em;
+    top: 0;
+  }
+
+  .prose blockquote p::after {
+    @apply text-foreground-muted pl-px;
+    content: "";
+    /* content: "❞"; */
+    right: -2em;
+    bottom: 0;
+  }
+
+  .prose pre {
+    margin: 0;
+  }
+
+  .prose hr {
+    border-color: var(--color-border);
+    border-radius: 9999px;
+  }
+
+  .prose thead {
+    border-color: var(--color-border-muted);
+  }
+
+  .prose {
+    font-weight: 350;
+    line-height: 1.5;
   }
 }

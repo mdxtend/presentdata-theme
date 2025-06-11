@@ -42,6 +42,27 @@ const config = {
 
     pages: [
         {
+            title: "Blog",
+            slug: "blogs",
+            pageType: {
+                name: "Blog",
+                path: "blogs",
+                fields: {
+                    title: { type: "string", required: false },
+                    preview: { type: "string", required: false },
+                    publishedAt: { type: "date", required: false },
+                    updatedAt: { type: "date", required: false },
+                    description: { type: "string", required: false },
+                    image: { type: "string", required: false },
+                    isPublished: { type: "boolean", default: false },
+                    author: { type: "string", required: false },
+                    username: { type: "string", required: false },
+                    github: { type: "string", required: false },
+                    tags: { type: "list", of: { type: "string" }, required: false },
+                },
+            },
+        },
+        {
             title: "Publications",
             slug: "publications",
             pageType: {

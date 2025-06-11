@@ -1,12 +1,12 @@
+import rehypeSlug from 'rehype-slug'
+import remarkGfm from 'remark-gfm'
 import { defineDocumentType, makeSource, type ComputedFields, type FieldDefs } from '@contentlayer/source-files'
 import presentData from './public/data/presentdata.config'
 import rehypeAutolinkHeadings from 'rehype-autolink-headings'
 import rehypePrettyCode from 'rehype-pretty-code'
 import rehypeRewrite from 'rehype-rewrite'
-import rehypeSlug from 'rehype-slug'
 import rehypeStringify from 'rehype-stringify'
 import rehypeParse from 'rehype-parse'
-import remarkGfm from 'remark-gfm'
 import { unified } from 'unified'
 import readingTime from 'reading-time'
 import GithubSlugger from 'github-slugger'
@@ -23,7 +23,6 @@ const createToc = async (body: string) => {
   const headings = [];
 
   for (const line of lines) {
-    // Toggle insideCodeBlock on triple backticks (```)
     if (line.trim().startsWith('```')) {
       insideCodeBlock = !insideCodeBlock;
       continue;
@@ -31,7 +30,6 @@ const createToc = async (body: string) => {
 
     if (insideCodeBlock) continue;
 
-    // Match headings outside code blocks
     const match = line.match(/^(#{1,4})\s+(.*)/);
     if (match) {
       const level = match[1].length === 1 ? 'one'
@@ -49,31 +47,6 @@ const createToc = async (body: string) => {
   return headings;
 };
 
-
-const extractPlainText = async (code: string): Promise<string> => {
-  try {
-    const html = await unified()
-      .use(rehypeParse, { fragment: true })
-      .use(rehypeRewrite, {
-        rewrite: (node, i, parent) => {
-          if (node.type === 'element' && /^[A-Z]/.test(node.tagName)) {
-            parent?.children?.splice(i!, 1)
-          }
-        },
-      })
-      .use(rehypeStringify)
-      .process(code.replace(/\{\/\*[\s\S]*?\*\/\}/g, ''))
-
-    return String(html)
-      .replace(/<[^>]+>/g, '')
-      .replace(/\s+/g, ' ')
-      .trim()
-      .slice(0, 650)
-  } catch {
-    return ''
-  }
-}
-
 const computedFields: ComputedFields = {
   url: {
     type: 'string',
@@ -86,10 +59,6 @@ const computedFields: ComputedFields = {
   toc: {
     type: 'json',
     resolve: async (doc) => await createToc(doc.body.raw),
-  },
-  transformedContent: {
-    type: 'string',
-    resolve: async (doc) => await extractPlainText(doc.body.raw),
   },
 }
 

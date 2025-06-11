@@ -19,6 +19,9 @@ const ImageViewer = ({ src, alt, className = '', align = 'center', maxWidthClass
     const fullscreenRef = useRef<HTMLDivElement>(null);
     const closeButtonRef = useRef<HTMLDivElement>(null);
     const [isShareMenu, setIsShareMenu] = useState(false);
+    const [hasError, setHasError] = useState(false)
+    const handleError = () => setHasError(true)
+
 
     if (!src) return null;
     let filename: string = '';
@@ -101,6 +104,12 @@ const ImageViewer = ({ src, alt, className = '', align = 'center', maxWidthClass
     const alignClasses =
         align === 'left' ? 'self-start' : align === 'right' ? 'self-end' : 'self-center';
 
+    const fallback = (
+        <div className="flex items-center justify-center w-[500px] h-[500px] p-10 whitespace-nowrap border border-border rounded-2xl bg-background-secondary text-sm font-mono uppercase text-red-500">
+            Image not found
+        </div>
+    )
+
     return (
         <div>
             {/* FULL SCREEN MODE */}
@@ -133,7 +142,7 @@ const ImageViewer = ({ src, alt, className = '', align = 'center', maxWidthClass
                         >
                             <motion.div
                                 ref={fullscreenRef}
-                                className="relative max-w-[90vw] rounded-lg shadow-lg"
+                                className="relative max-w-[90vw] rounded-lg shadow-lg z-100"
                                 onClick={(e) => e.stopPropagation()}
                                 layoutId={`image-preview-${src}-${uniqueId}`}
                             >
@@ -143,16 +152,18 @@ const ImageViewer = ({ src, alt, className = '', align = 'center', maxWidthClass
                                     animate={{ opacity: 1 }}
                                     exit={{ opacity: 0 }}
                                 >
-                                    <Image
-                                        src={resolvedSrc}
-                                        alt={alt || `Image Preview-${src}-${uniqueId}`}
-                                        width={500}
-                                        height={500}
-                                        unoptimized
-                                        quality={100}
-                                        className={`rounded-xl border border-border object-contain w-full max-w-[90vw] z-[200] max-h-[90vh] lg:max-h-[80vh] ${className}`}
-                                        {...rest}
-                                    />
+                                    {hasError ? fallback : (
+                                        <Image
+                                            src={resolvedSrc}
+                                            alt={alt || `Image Preview-${src}-${uniqueId}`}
+                                            width={500}
+                                            height={500}
+                                            unoptimized
+                                            quality={100}
+                                            className={`rounded-xl border border-border object-contain w-full max-w-[90vw] z-[500] max-h-[90vh] lg:max-h-[80vh] ${className}`}
+                                            {...rest}
+                                        />
+                                    )}
                                 </motion.div>
                             </motion.div>
 
@@ -240,29 +251,36 @@ const ImageViewer = ({ src, alt, className = '', align = 'center', maxWidthClass
                 className={`flex flex-col w-fit h-full cursor-pointer relative ${alignClasses}`}
                 onClick={previewEnabled ? toggleFullscreen : undefined}
             >
-                <motion.div layoutId={`image-preview-${src}-${uniqueId}`} className=''>
-                    <Image
-                        src={resolvedSrc}
-                        alt={alt || `Image Preview-${src}-${uniqueId}`}
-                        width={500}
-                        height={500}
-                        layout="fixed"
-                        unoptimized
-                        className={`${className}`}
-                        {...rest}
-                    />
+                <motion.div layoutId={`image-preview-${src}-${uniqueId}`} className={`${hasError ? 'z-0' : isFullscreen ? 'z-100' : 'z-50'}`}>
+                    {hasError ? fallback : (
+                        <Image
+                            src={resolvedSrc}
+                            alt={alt || `Image Preview-${src}-${uniqueId}`}
+                            width={500}
+                            height={500}
+                            layout="fixed"
+                            unoptimized
+                            className={`${className}`}
+                            onError={handleError}
+                            {...rest}
+                        />
+                    )}
                 </motion.div>
-                <div className=' absolute top-0 left-0 z-[-50] h-full'>
-                    <Image
-                        src={resolvedSrc}
-                        alt={alt || `Image Preview-${src}-${uniqueId}`}
-                        width={500}
-                        height={500}
-                        layout="fixed"
-                        unoptimized
-                        className={` ${className}`}
-                        {...rest}
-                    />
+
+                <div className='absolute top-0 left-0 z-[-50] h-full'>
+                    {hasError ? fallback : (
+                        <Image
+                            src={resolvedSrc}
+                            alt={alt || `Image Preview-${src}-${uniqueId}`}
+                            width={500}
+                            height={500}
+                            layout="fixed"
+                            unoptimized
+                            className={`${className}`}
+                            onError={handleError}
+                            {...rest}
+                        />
+                    )}
                 </div>
             </motion.div>
         </div>

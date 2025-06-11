@@ -12,9 +12,9 @@ import RenderMDX from '@/components/Presentdata/RenderMDX';
 import presentData from '@/public/data/presentdata.config';
 import TableOfContents from '@/components/Elements/TableOfContents';
 import { IosShareSVG, OptionsSVG, ReadTimeSVG, UpArrow } from '@/components/Presentdata/Icons';
+import Pagination from '@/components/Elements/Pagination';
 
-
-const addOrdinalSuffix = (day: number) => {w
+const addOrdinalSuffix = (day: number): string => {
   if (day > 3 && day < 21) return `${day}th`;
   switch (day % 10) {
     case 1: return `${day}st`;
@@ -24,30 +24,84 @@ const addOrdinalSuffix = (day: number) => {w
   }
 };
 
-const FormattedDate = (publishedAt: string) => {
+const FormattedDate = (publishedAt: string): string => {
   const date = parseISO(publishedAt);
   const day: number = parseInt(format(date, 'd'), 10);
   const dayWithSuffix = addOrdinalSuffix(day);
-  const formatted = format(date, `EEEE, LLLL '${dayWithSuffix}', yyyy`);
-  return formatted;
+  return format(date, `EEEE, LLLL '${dayWithSuffix}', yyyy`);
 };
 
-export default function Page({ page, doc, siteMetaData }: { page: any, doc: any, siteMetaData: any }) {
-  const router = useRouter()
+interface PageProps {
+  page: any;
+  doc: any;
+  siteMetaData: any;
+}
+
+export default function Page({ page, doc, siteMetaData }: PageProps) {
+  const router = useRouter();
   const [showScrollToTop, setShowScrollToTop] = useState(false);
 
-  const typeName = page.pageType?.name
-  const key = `all${typeName}s` as keyof typeof Contentlayer
-  const documents = Contentlayer[key] as unknown as any[] || []
+  // let isDocPage;
+  // if (!page) isDocPage = true;
+
+  // console.log(page);
+  // console.log(doc);
+
+
+  const typeName = page?.pageType?.name;
+  const key = `all${typeName}s` as keyof typeof Contentlayer;
+  const documents = Contentlayer[key] as unknown as any[] || [];
   const docPage = documents.find(d => d._id === `${typeName.toLowerCase()}s/index.mdx`);
+  const isDocPage = docPage?.url?.replace(/\/+$/, '') === router.asPath.replace(/\/+$/, '');
 
-  if (router.isFallback) return <div>Loading...</div>
-  if (!page && !docPage) return <div>Create {typeName}/index.mdx</div>
-  if (!page && !doc) return <div>Not Found</div>
+  console.log(page);
+  console.log(typeName);
 
 
-  if (page || docPage) {
-    // Original page UI fallback
+  useEffect(() => {
+    if (!doc) return;
+
+    const { hash } = window.location;
+    if (!hash) return;
+
+    const id = hash.substring(1);
+    const target = document.getElementById(id);
+    if (!target) return;
+
+    const root = document.documentElement;
+    root.style.scrollBehavior = 'auto';
+    target.scrollIntoView();
+    requestAnimationFrame(() => {
+      root.style.scrollBehavior = '';
+    });
+  }, [doc]);
+
+  useEffect(() => {
+    if (!doc) return;
+
+    const handleScroll = () => {
+      setShowScrollToTop(window.scrollY > 80);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [doc]);
+
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  };
+
+  console.log(documents);
+
+
+  if (router.isFallback) return <div>Loading...</div>;
+  if (!page && !doc) return <div>Not Found</div>;
+  // if (!page && !docPage) return <div>Create {typeName}/index.mdx</div>;
+
+  if (page || isDocPage) {
     return (
       <div className="min-h-[calc(100vh-8rem)] flex flex-col gap-2 p-4 py-10 max-lg:py-5">
         <Head>
@@ -60,13 +114,15 @@ export default function Page({ page, doc, siteMetaData }: { page: any, doc: any,
           <link rel="canonical" href={`https://yoursite.com/${page?.slug ?? docPage?.url ?? ''}`} />
         </Head>
 
-        <h1 className="text-5xl max-lg:text-2xl font-serif mb-3">{page.title}</h1>
+        <h1 className="text-5xl max-lg:text-2xl font-serif mb-3">{page?.title || "Untitled"}</h1>
 
-        {docPage && (<section>
-          <RenderMDX content={docPage} className="mt-10 mb-20" />
-        </section>)}
+        {docPage && (
+          <section>
+            <RenderMDX content={docPage} className="mt-10 mb-20" />
+          </section>
+        )}
 
-        {page.sectionButton && (
+        {page?.sectionButton && (
           <LinkButton title={page.sectionButton.title} href={page.sectionButton.link} downloadable />
         )}
 
@@ -74,47 +130,10 @@ export default function Page({ page, doc, siteMetaData }: { page: any, doc: any,
           <ListItems items={documents} />
         )}
       </div>
-    )
+    );
   }
 
-  else if (doc) {
-    useEffect(() => {
-      const { hash } = window.location
-      if (!hash) return
-      const id = hash.substring(1)
-      const target = document.getElementById(id)
-      if (!target) return
-      const root = document.documentElement
-      root.style.scrollBehavior = 'auto'
-      target.scrollIntoView()
-      requestAnimationFrame(() => {
-        root.style.scrollBehavior = ''
-      })
-    }, [])
-
-    const handleScroll = () => {
-      if (window.scrollY > 80) {
-        setShowScrollToTop(true);
-      } else {
-        setShowScrollToTop(false);
-      }
-    };
-
-    const scrollToTop = () => {
-      window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
-      });
-    };
-
-    useEffect(() => {
-      window.addEventListener('scroll', handleScroll);
-      return () => {
-        window.removeEventListener('scroll', handleScroll);
-      };
-    }, []);
-
-
+  if (doc) {
     return (
       <article>
         <Head>
@@ -138,9 +157,12 @@ export default function Page({ page, doc, siteMetaData }: { page: any, doc: any,
         <div className="flex justify-between">
           <div className="flex justify-center max-w-[70%] max-lg:max-w-full mt-10 max-lg:mt-5">
             <div className="px-20 max-lg:px-4 w-full">
+              {/* FOR MAINTAINING MAX-WIDTH */}
+              <div className='min-w-7xl w-full h-0 bg-transparent' />
+              
               <Breadcrumb />
 
-              <div className="max-lg:text-xs font-medium z-10 ">
+              <div className="max-lg:text-xs font-medium z-10">
                 <h1 className="uppercase font-serif font-extrabold text-3xl max-lg:text-2xl max-md:text-xl !tracking-widest !leading-normal relative w-full my-4 mb-0">
                   {doc?.title}
                 </h1>
@@ -167,35 +189,33 @@ export default function Page({ page, doc, siteMetaData }: { page: any, doc: any,
             </div>
           </div>
 
-          <div className="max-lg:hidden block sticky top-[8rem] min-w-80 w-full max-w-[20%] max-lg:max-w-full max-h-[calc(100vh-12rem)]">
-            <div className="">
+          <div className="max-lg:hidden block sticky mt-16 top-[8rem] min-w-80 w-full max-w-[20%] max-lg:max-w-full max-h-[calc(100vh-12rem)]">
+            <div>
               <TableOfContents item={doc} />
+              <Pagination currentId={doc._id} typeName={typeName} documents={documents} />
             </div>
-
           </div>
         </div>
       </article>
-    )
+    );
   }
 
-  return <div>Create {typeName}/index.mdx</div>
-
+  return <div>Create {typeName}/index.mdx</div>;
 }
 
-
 export const getStaticPaths: GetStaticPaths = async () => {
-  const generatePagePaths = (page: any, base: string[] = []) => {
-    const path = [...base, page.slug]
-    let paths = [{ params: { slug: path } }]
+  const generatePagePaths = (page: any, base: string[] = []): { params: { slug: string[] } }[] => {
+    const path = [...base, page.slug];
+    let paths = [{ params: { slug: path } }];
     if (page.children) {
       for (const child of page.children) {
-        paths = paths.concat(generatePagePaths(child, path))
+        paths = paths.concat(generatePagePaths(child, path));
       }
     }
-    return paths
-  }
+    return paths;
+  };
 
-  const pagePaths = presentData.pages.flatMap((page: any) => generatePagePaths(page))
+  const pagePaths = presentData.pages.flatMap((page: any) => generatePagePaths(page));
 
   const docPaths = Object.entries(Contentlayer)
     .filter(([key, value]) => key.startsWith('all') && Array.isArray(value))
@@ -203,42 +223,42 @@ export const getStaticPaths: GetStaticPaths = async () => {
       (docs as any[]).map((doc) => ({
         params: { slug: doc._raw.flattenedPath.split('/') },
       }))
-    )
+    );
 
   return {
     paths: [...pagePaths, ...docPaths],
     fallback: false,
-  }
-}
-
+  };
+};
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
-  const slugParts = params?.slug as string[]
-  const flattened = slugParts.join('/')
+  const slugParts = params?.slug as string[];
+  const flattened = slugParts.join('/');
 
   const findPage = (pages: any[], parts: string[]): any => {
     for (const page of pages) {
       if (page.slug === parts[0]) {
-        if (parts.length === 1) return page
-        if (page.children) return findPage(page.children, parts.slice(1))
+        if (parts.length === 1) return page;
+        if (page.children) return findPage(page.children, parts.slice(1));
       }
     }
-    return null
-  }
+    return null;
+  };
 
-  const page = findPage(presentData.pages, slugParts)
+  const page = findPage(presentData.pages, slugParts);
 
-  const getAllDocs = () =>
+  const getAllDocs = (): any[] =>
     Object.entries(Contentlayer)
       .filter(([key, value]) => key.startsWith('all') && Array.isArray(value))
-      .flatMap(([_, docs]) => docs as any[])
+      .flatMap(([_, docs]) => docs as any[]);
 
   const docPath = page?.pageType?.path
     ? `${page.pageType.path}/${flattened}`
-    : flattened
+    : flattened;
 
-  const doc = getAllDocs().find((d) => d._raw.flattenedPath === docPath || d._raw.flattenedPath === flattened) || null
-  if (!page && !doc) return { notFound: true }
+  const doc = getAllDocs().find((d) => d._raw.flattenedPath === docPath || d._raw.flattenedPath === flattened) || null;
+
+  if (!page && !doc) return { notFound: true };
 
   return {
     props: {
@@ -246,5 +266,5 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
       doc,
       siteMetaData: presentData.siteMetaData,
     },
-  }
-}
+  };
+};

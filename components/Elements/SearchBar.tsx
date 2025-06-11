@@ -240,7 +240,7 @@ export const SearchBarModal = ({
                                             <div className="text-lg flex flex-col text-foreground-accent">
                                                 {data.map(([type, items]: [string, { title: string; url: string }[]]) => (
                                                     <div key={type}>
-                                                        <div className="px-4 font-mono uppercase text-xs mt-3 mb-1 text-primary">
+                                                        <div className="px-4 font-mono uppercase text-xs mt-3 mb-1 text-primary-bright">
                                                             {type}s
                                                         </div>
                                                         {items.map((item, idx) => {
@@ -432,7 +432,7 @@ export const SearchBarModalMobile = ({
                                         <>
                                             {data.map(([type, items]: [string, { title: string; url: string }[]]) => (
                                                 <div key={type}>
-                                                    <div className="font-mono uppercase text-xs mt-3 text-primary">{type}s</div>
+                                                    <div className="font-mono uppercase text-xs mt-3 text-primary-bright">{type}s</div>
                                                     {items.map((item, idx) => {
                                                         const actualIndex = flattenedData.findIndex((fItem: { url: string; title: string; }) => fItem.url === item.url && fItem.title === item.title);
                                                         return (
@@ -509,7 +509,7 @@ const SearchBar = ({
                         readOnly
                     />
                     <div className="absolute top-1/2 -translate-y-1/2 right-2 p-4 px-4 flex gap-1 items-center justify-center cursor-pointer h-8 bg-background-secondary border border-border-muted rounded-2xl group">
-                        <svg className="w-3.5 h-3.5 fill-foreground-accent group-hover:fill-foreground" viewBox="0 0 80 80">
+                        <svg width={12} height={12} className="w-3.5 h-3.5 fill-foreground-accent group-hover:fill-foreground" viewBox="0 0 80 80">
                             <path d="M64,48h-8V32h8c8.836,0,16-7.164,16-16S72.836,0,64,0c-8.837,0-16,7.164-16,16v8H32v-8c0-8.836-7.164-16-16-16S0,7.164,0,16s7.164,16,16,16h8v16h-8c-8.836,0-16,7.164-16,16s7.164,16,16,16c8.837,0,16-7.164,16-16v-8h16v7.98c0,8.836,7.164,16,16,16s16-7.164,16-16S72.836,48.002,64,48z M64,8c4.418,0,8,3.582,8,8s-3.582,8-8,8h-8v-8C56,11.582,59.582,8,64,8z M8,16c0-4.418,3.582-8,8-8s8,3.582,8,8v8h-8C11.582,24,8,20.417,8,16z M16,72c-4.418,0-8-3.582-8-8s3.582-8,8-8l0,0h8v8C24,68.418,20.418,72,16,72z M32,48V32h16v16H32z M64,72c-4.418,0-8-3.582-8-8v-8h7.999c4.418,0,8,3.582,8,8S68.418,72,64,72z" />
                         </svg>
                         <span className='text-foreground-accent group-hover:text-foreground font-mono'>K</span>

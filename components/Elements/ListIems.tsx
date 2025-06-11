@@ -19,6 +19,8 @@ const ListItems = ({ items }: { items: any[] }) => {
         })
     }
 
+    if (!items) return <div>No Items Found.</div>
+
     return (
         <div className="grid grid-cols-2 max-lg:grid-cols-1 gap-3">
             {items.map((item, index) => {

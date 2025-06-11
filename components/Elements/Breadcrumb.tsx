@@ -22,7 +22,7 @@ const Breadcrumb = () => {
     }
 
     return (
-        <nav aria-label="Breadcrumb" className="my-4 line-clamp-1 min-h-6">
+        <nav aria-label="Breadcrumb" className="my-3 -mx-2 p-1 px-2 line-clamp-1 min-h-6">
             <ol className="flex flex-wrap items-center text-foreground-accent font-medium">
                 {items.map((item, index) => (
                     <li key={item.href} className="flex items-center">
