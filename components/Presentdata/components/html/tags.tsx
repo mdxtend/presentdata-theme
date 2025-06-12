@@ -1,7 +1,8 @@
-import { MdxReactType } from "../../MDXComponents"
+
 import React, { useState, useRef, useEffect, useCallback } from 'react';
-import ToolTip from '@/components/Presentdata/PdataComponents/utility/ToolTip';
+import ToolTip from '@/components/Presentdata/components/utility/ToolTip';
 import { CheckIcon, CopyIcon, TextUnWrapIcon, TextWrapIcon } from '@/components/Presentdata/Icons';
+import { MdxReactType } from '..';
 
 export const a = (props: React.AnchorHTMLAttributes<HTMLAnchorElement>) => (
     <a className='underline-offset-4 font-normal text-blue-500 hover:text-blue-600 focus-within:text-violet-500 visited:text-violet-500 visited:hover:text-violet-600 break-words text-base' target='_blank' {...props} />

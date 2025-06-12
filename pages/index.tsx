@@ -51,7 +51,7 @@ export default function Home() {
             <div className="flex flex-col h-full w-full justify-between mt-5">
               <div className="flex gap-4 text-2xl italic text-foreground-accent">
                 {heroSection.socialLinks?.map((item, index) => (
-                  <Link target="_blank" href={item.href} className="hover:text-foreground underline underline-offset-4">{item.title}</Link>
+                  <Link key={index} target="_blank" href={item.href} className="hover:text-foreground underline underline-offset-4">{item.title}</Link>
                 ))}
               </div>
               <div

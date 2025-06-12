@@ -63,7 +63,7 @@ const Header = () => {
                         <div className="h-full w-full flex items-center justify-between p-4">
                             <div className="w-fit max-xl:w-full flex items-center text-2xl select-none" onClick={() => burgerMenuClick && setBurgerMenuClick(false)}>
                                 <Link href="/" className='flex whitespace-nowrap items-center justify-center font-serif tracking-wider'>
-                                    <span className="">Walter White</span>
+                                    <span className="">{presentData.siteMetaData.title}</span>
                                 </Link>
                             </div>
 

@@ -1,7 +1,7 @@
 import React from 'react'
+import { mdxComponents } from './components';
 import { Profile } from '@/.contentlayer/generated';
 import { useMDXComponent } from 'next-contentlayer/hooks';
-import { mdxComponents } from '@/components/Presentdata/MDXComponents';
 
 interface RenderMDXProps<T = { body?: { code?: string } }> {
   content?: T | Profile | null

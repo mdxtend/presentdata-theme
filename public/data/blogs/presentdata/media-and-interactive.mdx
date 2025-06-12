@@ -1,0 +1,113 @@
+---
+title: "3. Media & Interactive"
+description: These components structure the primary body of content.
+publishedAt: "2025-04-09"
+updatedAt: "2025-04-09"
+author: "Gautam Ankoji"
+username: "gautamankoji"
+isPublished: true
+tags:
+    - spectroscopy
+    - analytical chemistry
+---
+
+Here are Markdown/MDX-style examples for **Media & Interactive Components**, assuming a CMS or MDX environment that supports rich media components:
+
+---
+
+### **Image** (with caption + zoom/fullscreen)
+
+```mdx
+<Image 
+  src="/images/demo-chart.png" 
+  alt="Analytics Breakdown Chart" 
+  caption="Figure 2.1 – Weekly engagement metrics" 
+  zoom
+/>
+```
+
+---
+
+### **Video** (responsive, with controls)
+
+```mdx
+<Video 
+  src="/media/demo-video.mp4" 
+  title="Platform Walkthrough"
+  autoplay 
+  muted 
+  loop 
+  controls 
+/>
+```
+
+---
+
+### **AudioPlayer** (for research or podcasts)
+
+```mdx
+<AudioPlayer 
+  src="/audio/interview-snippet.mp3" 
+  title="Research Interview: Dr. Smith" 
+  description="Segment from ethnographic study on data sharing" 
+/>
+```
+
+---
+
+### **Gallery** (lightbox-enabled image grid)
+
+```mdx
+<Gallery
+  images={[
+    { src: "/gallery/image1.jpg", alt: "Field Study 1" },
+    { src: "/gallery/image2.jpg", alt: "Field Study 2" },
+    { src: "/gallery/image3.jpg", alt: "Field Study 3" },
+  ]}
+/>
+```
+
+---
+
+### **Embed** (external content: YouTube, Twitter, iframe)
+
+```mdx
+<Embed 
+  src="https://www.youtube.com/embed/dQw4w9WgXcQ" 
+  title="Demo Presentation" 
+  provider="youtube"
+/>
+```
+
+For Twitter or iframe:
+
+```mdx
+<Embed 
+  src="https://twitter.com/OpenAI/status/1234567890123456789" 
+  provider="twitter" 
+/>
+
+<Embed 
+  src="https://data.example.org/visualization" 
+  title="Live Data Feed" 
+  provider="iframe"
+/>
+```
+
+---
+
+### **Carousel** (stepwise guide or visual demo)
+
+```mdx
+<Carousel
+  slides={[
+    { title: "Step 1", content: "Upload your document." },
+    { title: "Step 2", content: "Select your template." },
+    { title: "Step 3", content: "Publish with one click." },
+  ]}
+/>
+```
+
+---
+
+Let me know if your rendering engine needs fallback markdown or alternate syntax.

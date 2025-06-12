@@ -51,7 +51,12 @@ export const Quote = ({ className }: IconProps) => (
     <svg className={`${className}`} width="20px" height="20px" viewBox="0 0 17 17" xmlns="http://www.w3.org/2000/svg" fill="currentColor">
         <path d="M1 14c-.55 0-1-.43-1-1s.45-1 1-1c2.76 0 4-1.2 4-3.88V7H1.56C.73 7 .05 6.3.05 5.47V1.51C.05.68.73 0 1.56 0h3.93C6.32 0 7 .68 7 1.51v6.61C7 11.4 4.86 14 1 14zM10 14c-.55 0-1-.43-1-1s.45-1 1-1c2.76 0 4-1.2 4-3.88V7h-3.47C9.7 7 9.02 6.27 9.02 5.44V1.51C9.02.68 9.7 0 10.53 0h3.95C15.32 0 16 .68 16 1.51v6.61c0 3.78-2.14 5.88-6 5.88z" />
     </svg>
+);
 
+export const Edit = ({ className }: IconProps) => (
+    <svg className={`${className}`} width="20px" height="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path fill-rule="evenodd" clip-rule="evenodd" d="M20.8477 1.87868C19.6761 0.707109 17.7766 0.707105 16.605 1.87868L2.44744 16.0363C2.02864 16.4551 1.74317 16.9885 1.62702 17.5692L1.03995 20.5046C0.760062 21.904 1.9939 23.1379 3.39334 22.858L6.32868 22.2709C6.90945 22.1548 7.44285 21.8693 7.86165 21.4505L22.0192 7.29289C23.1908 6.12132 23.1908 4.22183 22.0192 3.05025L20.8477 1.87868ZM18.0192 3.29289C18.4098 2.90237 19.0429 2.90237 19.4335 3.29289L20.605 4.46447C20.9956 4.85499 20.9956 5.48815 20.605 5.87868L17.9334 8.55027L15.3477 5.96448L18.0192 3.29289ZM13.9334 7.3787L3.86165 17.4505C3.72205 17.5901 3.6269 17.7679 3.58818 17.9615L3.00111 20.8968L5.93645 20.3097C6.13004 20.271 6.30784 20.1759 6.44744 20.0363L16.5192 9.96448L13.9334 7.3787Z" fill="currentColor"></path>
+    </svg>
 );
 
 export const Settings = ({ className }: IconProps) => (
@@ -63,7 +68,15 @@ export const Settings = ({ className }: IconProps) => (
 export const UpArrow = ({ className }: IconProps) => (
     <svg className={`${className}`} width={18} height={18} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path fill-rule="evenodd" clip-rule="evenodd" d="M12 3C12.2652 3 12.5196 3.10536 12.7071 3.29289L19.7071 10.2929C20.0976 10.6834 20.0976 11.3166 19.7071 11.7071C19.3166 12.0976 18.6834 12.0976 18.2929 11.7071L13 6.41421V20C13 20.5523 12.5523 21 12 21C11.4477 21 11 20.5523 11 20V6.41421L5.70711 11.7071C5.31658 12.0976 4.68342 12.0976 4.29289 11.7071C3.90237 11.3166 3.90237 10.6834 4.29289 10.2929L11.2929 3.29289C11.4804 3.10536 11.7348 3 12 3Z" fill="currentColor"></path>
-    </svg>);
+    </svg>
+);
+
+export const DoubleUpArrow = ({ className }: IconProps) => (
+    <svg className={`${className}`} width={18} height={18} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M5 19L11.2929 12.7071C11.6834 12.3166 12.3166 12.3166 12.7071 12.7071L19 19" stroke="currentcolor" strokeWidth="2" stroke-linecap="round" strokeLinejoin="round"></path>
+        <path d="M5 11L11.2929 4.70711C11.6834 4.31658 12.3166 4.31658 12.7071 4.70711L19 11" stroke="currentcolor" strokeWidth="2" stroke-linecap="round" strokeLinejoin="round"></path>
+    </svg>
+);
 
 export const LayoutSidebarLeft = ({ className }: IconProps) => (
     <svg className={`${className}`} stroke="currentColor" fill="currentColor" strokeWidth="0" viewBox="0 0 16 16" height="20px" width="40px" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" clipRule="evenodd" d="M2 1L1 2V14L2 15H14L15 14V2L14 1H2ZM14 14H7V2H14V14Z"></path></svg>

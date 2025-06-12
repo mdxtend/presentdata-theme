@@ -69,6 +69,24 @@ h6 {
   }
 }
 
+.codeblock-linenumbers {
+  [data-line] {
+    @apply pl-[1.3rem] mx-1.5 lg:mx-0.5 min-h-[1.5rem];
+    position: relative;
+    counter-increment: line-number;
+  }
+
+  [data-line]::before {
+    @apply  inline-flex;
+    content: counter(line-number);
+    position: absolute;
+    left: 0;
+    color: gray;
+    font-size: 0.875rem;
+  }
+}
+
+
 code::before,
 code::after {
   content: "" !important;
@@ -173,6 +191,7 @@ input[type="checkbox"][checked] {
 
   .prose pre {
     margin: 0;
+    @apply bg-background-dark;
   }
 
   .prose hr {
@@ -188,4 +207,10 @@ input[type="checkbox"][checked] {
     font-weight: 350;
     line-height: 1.5;
   }
+}
+
+/* EDITOR */
+
+.monaco-editor {
+  @apply !outline-0;
 }
