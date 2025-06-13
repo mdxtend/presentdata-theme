@@ -55,7 +55,7 @@ const ShareMenu = ({ src }: { src?: string | StaticImageData; }) => {
             href={s.url}
             target="_blank"
             rel="noopener noreferrer"
-            className="bg-blue-500 hover:bg-blue-600 text-white text-sm px-3 py-1 rounded-md"
+            className="bg-blue-500 hover:bg-blue-600 text-foreground text-sm px-3 py-1 rounded-md"
           >
             {s.name}
           </a>

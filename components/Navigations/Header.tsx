@@ -4,6 +4,8 @@ import { useEffect, useRef, useState } from "react";
 import presentData from '@/public/data/presentdata.config';
 import { Menu, Close } from "@/components/Presentdata/Icons";
 import SearchBar, { SearchBarModal, SearchBarModalMobile } from "../Elements/SearchBar";
+import { Moon, ThermometerIcon } from "lucide-react";
+import ToggleTheme from "../Elements/ToggleTheme";
 
 const Header = () => {
     const [burgerMenuClick, setBurgerMenuClick] = useState(false);
@@ -14,8 +16,13 @@ const Header = () => {
     const closeBurgerMenu = () => {
         setBurgerMenuClick(false);
     }
-
+    
     const closeSearchModal = () => {
+        setIsSearchModalOpen(false);
+    }
+    
+    const handleClose = () => {
+        setBurgerMenuClick(false);
         setIsSearchModalOpen(false);
     }
     // const openSearchModal = () => {
@@ -61,8 +68,8 @@ const Header = () => {
                 <header className="fixed top-0 left-0 h-16 w-full justify-items-center backdrop-blur-xl bg-background/80 border-b-0 border-border">
                     <div className="max-w-7xl border border-border border-t-0 max-xl:border-x-0 h-full w-full mx-auto flex items-center justify-between ">
                         <div className="h-full w-full flex items-center justify-between p-4">
-                            <div className="w-fit max-xl:w-full flex items-center text-2xl select-none" onClick={() => burgerMenuClick && setBurgerMenuClick(false)}>
-                                <Link href="/" className='flex whitespace-nowrap items-center justify-center font-serif tracking-wider'>
+                            <div className="w-fit max-xl:w-full flex items-center text-2xl text-foreground select-none" onClick={() => burgerMenuClick && setBurgerMenuClick(false)}>
+                                <Link href="/" className='flex whitespace-nowrap items-center justify-center font-serif tracking-wide'>
                                     <span className="">{presentData.siteMetaData.title}</span>
                                 </Link>
                             </div>
@@ -86,13 +93,25 @@ const Header = () => {
                         </div>
 
                         <div className="flex max-lg:justify-between h-full">
+                            {/* <div
+                                className={`relative flex gap-3 items-center px-4 bg-background group border-l border-border hover:border-b-foreground smooth-animation hover:cursor-pointer`}
+                                id="burger-menu"
+                                onClick={handleClose}
+                            >
+                                <div className={`absolute bottom-0 left-0 w-full bg-foreground transition-all duration-300 ease-in-out overflow-hidden ${burgerMenuClick ? 'h-full' : 'h-0'}`} />
+                                <div className="w-5 flex items-center justify-center">
+                                    <Moon className="text-foreground-accent hover:text-foreground" />
+                                </div>
+                            </div> */}
+                            <ToggleTheme  />
+
                             <SearchBar
                                 onClickBurgerMenu={closeBurgerMenu}
                                 setSearchBarClick={setSearchBarClick}
                                 searchBarClick={searchBarClick}
                                 setIsSearchModalOpen={setIsSearchModalOpen}
                             />
-
+                            
                             <div
                                 className={`relative hidden max-lg:flex gap-3 items-center px-4 bg-background group border-l border-border hover:border-b-foreground smooth-animation hover:cursor-pointer`}
                                 id="burger-menu"
@@ -105,10 +124,10 @@ const Header = () => {
                                 <div className="w-5 flex items-center justify-center">
                                     {burgerMenuClick ? (
                                         <motion.div initial={{ scale: 1 }} animate={{ scale: 2 }} exit={{ scale: 1 }} transition={{ type: 'spring', stiffness: 500, damping: 20 }} className="mix-blend-difference">
-                                            <Close className="text-foreground mix-blend-difference w-3 h-3 z-10" />
+                                            <Close className="text-background mix-blend-difference w-3 h-3 z-10" />
                                         </motion.div>
                                     ) : (
-                                        <Menu className={`mix-blend-difference text-foreground-muted max-lg:text-foreground group-hover:text-foreground smooth-animation w-10 h-10  z-10`} />
+                                        <Menu className={`mix-blend-difference text-foreground max-lg:text-foreground group-hover:text-foreground smooth-animation w-10 h-10  z-10`} />
                                     )}
                                 </div>
                             </div>

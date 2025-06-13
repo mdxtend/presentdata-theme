@@ -28,15 +28,17 @@ const ImageViewer = ({ src, alt, className = '', align = 'center', maxWidthClass
 
     let resolvedSrc: string | StaticImageData = src;
     if (typeof src === 'string') {
-        filename = src.split('/').pop() || '';
+        const [cleanPath] = src.split(/[?#]/);
+        filename = cleanPath.split('/').pop() || '';
+
         if (src.startsWith('http') || src.startsWith('data:')) {
             resolvedSrc = src;
         } else {
-            let basePath = router.asPath.split('#')[0];
+            let basePath = router.asPath.split('#')[0].split('?')[0];
             let base = '/data' + basePath;
             if (!base.endsWith('/')) base += '/';
-            const cleanSrc = src.startsWith('/') ? src.slice(1) : src;
-            resolvedSrc = base + cleanSrc;
+            const relativePath = cleanPath.startsWith('/') ? cleanPath.slice(1) : cleanPath;
+            resolvedSrc = base + relativePath;
         }
     } else {
         if (src && typeof src.src === 'string') {
@@ -45,7 +47,6 @@ const ImageViewer = ({ src, alt, className = '', align = 'center', maxWidthClass
             filename = 'unknown_image';
         }
     }
-
 
     const toggleFullscreen = useCallback(() => {
         setIsFullscreen((prev) => !prev);
@@ -160,7 +161,7 @@ const ImageViewer = ({ src, alt, className = '', align = 'center', maxWidthClass
                                             height={500}
                                             unoptimized
                                             quality={100}
-                                            className={`rounded-xl border border-border object-contain w-full max-w-[90vw] z-[500] max-h-[90vh] lg:max-h-[80vh] ${className}`}
+                                            className={`rounded-xl object-contain w-full max-w-[90vw] z-[500] max-h-[90vh] lg:max-h-[80vh] ${className}`}
                                             {...rest}
                                         />
                                     )}
@@ -237,7 +238,7 @@ const ImageViewer = ({ src, alt, className = '', align = 'center', maxWidthClass
                                         <ShareMenu src={src} />
                                     </div>
                                 </div>)}
-                                <div className="h-10 fixed bottom-2 right-0 flex items-center gap-2 max-lg:gap-1.5 p-4 z-[350]">
+                                <div className="h-10 fixed bottom-2 right-2 flex items-center border border-border rounded-full bg-background-secondary gap-2 max-lg:gap-1.5 p-4 z-[350]">
                                     <div className='font-mono text-base text-foreground-accent'>{filename}</div>
                                 </div>
                             </motion.div>

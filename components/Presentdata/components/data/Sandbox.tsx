@@ -5,6 +5,7 @@ import { Editor, loader } from '@monaco-editor/react';
 import { AnimatePresence, motion } from 'framer-motion';
 import Copyright from '@/components/Elements/Copyright';
 import { useRef, useEffect, useState, useCallback, useMemo } from 'react'
+import { useTheme } from '@/components/Hooks/ThemeProvider';
 
 interface CodeSandboxModalProps {
     open: boolean
@@ -58,6 +59,8 @@ export const CodeSandboxModal = ({
     const iframeRef = useRef<HTMLIFrameElement>(null)
     const executionTimeoutRef = useRef<NodeJS.Timeout | null>(null)
     const mountedRef = useRef(true)
+    // console.log(theme);
+    
 
     useEffect(() => {
         mountedRef.current = true
@@ -334,12 +337,29 @@ export const CodeSandboxModal = ({
 
     useEffect(() => {
         loader.init().then((monaco) => {
+            if (!monaco?.editor) return;
+
+            monaco.editor.defineTheme('transparent-light', {
+                base: 'vs',
+                inherit: true,
+                rules: [],
+                colors: {
+                    'editor.background': '#00000000',
+                    // 'editorLineNumber.foreground': '#a0a0a0',
+                    'editor.foreground': '#1a1a1a',
+                    // 'editorCursor.foreground': '#000000',
+                },
+            });
+
             monaco.editor.defineTheme('transparent-dark', {
                 base: 'vs-dark',
                 inherit: true,
                 rules: [],
                 colors: {
-                    'editor.background': '#2a2b2c',
+                    'editor.background': '#00000000',
+                    // 'editorLineNumber.foreground': '#cccccc',
+                    // 'editor.foreground': '#ffffff',
+                    // 'editorCursor.foreground': '#ffffff',
                 },
             });
         });
@@ -440,28 +460,28 @@ export const CodeSandboxModal = ({
                         </div>
 
                         <div className="hidden max-lg:flex items-center justify-center gap-2 font-mono w-full">
-                                <div className='flex '>
-                                    <ToolTip content="SUBMIT [Ctrl]+[Enter]">
-                                        <button
-                                            onClick={handleRun}
-                                            disabled={isExecuting}
-                                            className="w-full bg-background-tertiary hover:bg-background-code disabled:bg-zinc-400 text-green-500 px-4 py-2 border border-border/40 hover:border-border rounded-md text-sm font-medium transition-colors"
-                                        >
-                                            Run Code
-                                        </button>
-                                    </ToolTip>
-                                </div>
-
-                                <div className='flex'>
+                            <div className='flex '>
+                                <ToolTip content="SUBMIT [Ctrl]+[Enter]">
                                     <button
-                                        onClick={handleReset}
+                                        onClick={handleRun}
                                         disabled={isExecuting}
-                                        className="w-full bg-background-tertiary hover:bg-background-code disabled:bg-zinc-400 text-foreground px-4 py-2 border border-border/40 hover:border-border rounded-md text-sm font-medium transition-colors"
+                                        className="w-full bg-background-tertiary hover:bg-background-code disabled:bg-zinc-400 text-green-500 px-4 py-2 border border-border/40 hover:border-border rounded-md text-sm font-medium transition-colors"
                                     >
-                                        Reset
+                                        Run Code
                                     </button>
-                                </div>
+                                </ToolTip>
                             </div>
+
+                            <div className='flex'>
+                                <button
+                                    onClick={handleReset}
+                                    disabled={isExecuting}
+                                    className="w-full bg-background-tertiary hover:bg-background-code disabled:bg-zinc-400 text-foreground px-4 py-2 border border-border/40 hover:border-border rounded-md text-sm font-medium transition-colors"
+                                >
+                                    Reset
+                                </button>
+                            </div>
+                        </div>
 
                         {/* code editor panel */}
                         <div className="flex-1 min-h-0 grid grid-cols-2 max-lg:grid-cols-1 gap-4">
@@ -472,13 +492,15 @@ export const CodeSandboxModal = ({
                                         {sanitizedCode.length} chars
                                     </div>
                                 </div>
-                                <div className="relative flex-1 ">
+                                <div className="relative flex-1 "
+                                    aria-theme={theme === 'light' ? 'transparent-light' : 'transparent-dark'}
+                                >
                                     <Editor
                                         defaultLanguage="javascript"
                                         value={userCode}
                                         className={`flex-1 font-mono text-sm border-2 border-border rounded-2xl -mx-2 py-4 resize-none focus:outline-none focus:ring-0 focus:border-border-muted bg-background-code text-foreground placeholder:text-foreground-accent`}
                                         onChange={(value) => setUserCode(value || "")}
-                                        theme="transparent-dark"
+                                        theme={theme === 'light' ? 'transparent-light' : 'transparent-dark'}
                                         options={{
                                             fontSize: 16,
                                             minimap: { enabled: false },

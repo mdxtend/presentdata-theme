@@ -7,8 +7,9 @@ author: "Gautam Ankoji"
 username: "gautamankoji"
 isPublished: true
 tags:
-    - spectroscopy
-    - analytical chemistry
+    - callout
+    - blockquote
+    - quotecard
 ---
 
 Here are Markdown-style examples for **Informational/Callout Components**. These assume you're using an MDX-based system or CMS that supports custom callouts (like `>` syntax with keywords or custom components):
@@ -17,21 +18,51 @@ Here are Markdown-style examples for **Informational/Callout Components**. These
 
 ## Neutral (neutral info box)
 
+- Example
+
 > ## Important
 > 
 > Make sure to back up your data before performing this action.
+
+- Syntax
+
+<Code>
+<Tab fileName="neutral.mdx" language="mdx">
+```mdx
+> ## Important
+> 
+> Make sure to back up your data before performing this action.
+```
+</Tab>
+</Code>
 
 ---
 
 ## Informational
 
+- Example
+
 > ## Note
 > 
 > You can update your profile at any time from the settings page.
 
+- Syntax
+
+<Code>
+<Tab fileName="informational.mdx" language="mdx">
+```mdx
+> ## Note
+> 
+> You can update your profile at any time from the settings page.
+```
+</Tab>
+</Code>
+
 ---
 
 ## Warning / Caution (alert box with minor severity)
+
+- Example
 
 > ## Warning
 > 
@@ -49,9 +80,35 @@ Here are Markdown-style examples for **Informational/Callout Components**. These
 > 
 > This action will overwrite existing files. Proceed with caution.
 
+- Syntax
+
+<Code>
+<Tab fileName="callout-warning.mdx" language="mdx">
+```mdx
+> ## Warning
+> 
+> This action will overwrite existing files. Proceed with caution.
+
+> ## Caution
+> 
+> This action will overwrite existing files. Proceed with caution.
+
+> ## Warn
+> 
+> This action will overwrite existing files. Proceed with caution.
+
+> ## Alert
+> 
+> This action will overwrite existing files. Proceed with caution.
+```
+</Tab>
+</Code>
+
 ---
 
 ## Error (critical or failure state)
+
+- Example
 
 > ## Danger
 > 
@@ -69,9 +126,35 @@ Here are Markdown-style examples for **Informational/Callout Components**. These
 > 
 > This action will overwrite existing files. Proceed with caution.
 
+- Syntax
+
+<Code>
+<Tab fileName="callout-error.mdx" language="mdx">
+```mdx
+> ## Danger
+> 
+> This action will overwrite existing files. Proceed with caution.
+
+> ## Error
+> 
+> This action will overwrite existing files. Proceed with caution.
+
+> ## Failure
+> 
+> This action will overwrite existing files. Proceed with caution.
+
+> ## Critical
+> 
+> This action will overwrite existing files. Proceed with caution.
+```
+</Tab>
+</Code>
+
 ---
 
 ## Success (positive reinforcement)
+
+- Example
 
 > ## Success
 > 
@@ -81,9 +164,27 @@ Here are Markdown-style examples for **Informational/Callout Components**. These
 > 
 > Your changes have been saved successfully.
 
+- Syntax
+
+<Code>
+<Tab fileName="callout-success.mdx" language="mdx">
+```mdx
+> ## Success
+> 
+> Your changes have been saved successfully.
+
+> ## Tip
+> 
+> Your changes have been saved successfully.
+```
+</Tab>
+</Code>
+
 ---
 
 ## QuoteCard (citation/testimonial format)
+
+- Example
 
 <QuoteCard
   name="Dr. Jane Doe"
@@ -92,3 +193,19 @@ Here are Markdown-style examples for **Informational/Callout Components**. These
 >
   ❝The modularity and speed of this platform make it a perfect choice for modern scientific publishing.❞
 </QuoteCard>
+
+- Syntax
+
+<Code>
+<Tab fileName="quotecard.mdx" language="mdx">
+```jsx
+<QuoteCard
+  name="Dr. Jane Doe"
+  title="Astrophysicist, MIT"
+  avatar="/images/dr-jane.jpg"
+>
+  ❝The modularity and speed of this platform make it a perfect choice for modern scientific publishing.❞
+</QuoteCard>
+```
+</Tab>
+</Code>

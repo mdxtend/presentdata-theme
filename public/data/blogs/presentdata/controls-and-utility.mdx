@@ -1,25 +1,38 @@
 ---
-title: "Controls and Utiltiy Components"
-description: These components structure the primary body of content.
+title: "Controls and Utility Components"
+description: Reusable UI components for structuring interactive and labeled elements.
 publishedAt: "2025-04-09"
 updatedAt: "2025-04-09"
 author: "Gautam Ankoji"
 username: "gautamankoji"
 isPublished: true
 tags:
-    - spectroscopy
-    - analytical chemistry
+  - button
+  - tooltip
+  - badge
 ---
 
 Reusable UI elements that may be embedded in blocks.
 
 ## Button
 
-<Button title="This is an Button" className="" />
+<Button title="This is a Button" className="" />
 
-## ToolTip
+## Tooltip
 
-- Without Icon: <Badge label="Draft" /> <ToolTip content="GitHub: MDxtend"><Badge label="Github" color="gray" /></ToolTip>
-- With Icon: <Badge label="Error" color="red" icon={<Lucide name="ShieldAlert" />} />
+<ToolTip content="GitHub: MDxtend">
+  <Badge label="Github" color="gray" />
+</ToolTip>
 
-> Icons By: **[lucide.dev](https://lucide.dev/)**
+## Badge
+
+- Without Icon:  
+  <Badge label="Draft" />  
+  <ToolTip content="GitHub: MDxtend">
+    <Badge label="Github" color="gray" />
+  </ToolTip>
+
+- With Icon:  
+  <Badge label="Error" color="red" icon={<Lucide name="ShieldAlert" />} />
+
+> Icons by: **[lucide.dev](https://lucide.dev/icons)**

@@ -12,7 +12,7 @@ const LinkButton = ({ title, href="#", downloadable }: LinkButtonProps) => {
     <Link
       href={href}
       {...(downloadable ? { download: true } : {})}
-      className='w-fit p-1.5 px-6 max-lg:p-1 max-lg:px-3 bg-primary-bright hover:bg-primary text-black font-mono border border-primary uppercase text-sm max-lg:text-xs rounded-[8px] font-bold'
+      className='w-fit p-1.5 px-6 max-lg:p-1 max-lg:px-3 bg-primary-bright hover:bg-primary text-foreground font-mono border border-primary uppercase text-sm max-lg:text-xs rounded-[8px] font-bold'
     >
       {title}
     </Link>

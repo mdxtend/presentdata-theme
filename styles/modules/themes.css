@@ -2,7 +2,7 @@
 
 /*! DEFAULT [DARK MODE: NEON MATRIX - GREEN] !*/
 /*! PROFESSIONAL RESEARCH SCHOLAR DARK THEME !*/
-:root {
+:root[data-theme='dark'] {
     /** BACKGROUND COLORS **/
     --background:           #101012;
     --background-dark:      #0b0b0d;
@@ -48,4 +48,52 @@
 
     /** MISC **/
     --scrollbar-color: #49494c;
+}
+
+:root[data-theme='light'] {
+    /** BACKGROUND COLORS **/
+    --background:           #ffffff;
+    --background-dark:      #f5f5f7;
+    --background-hover:     #ebebef;
+    --background-primary:   #f9f9fb;
+    --background-secondary: #f0f0f2;
+    --background-tertiary:  #e6e6e8;
+    --background-code:      #f4f4f4;
+    --background-codeblock: #f0f0f0;
+    --background-scrollbar: #dcdcdf;
+
+    /** TEXT COLORS **/
+    --foreground:           #1a1a1a;
+    --foreground-muted:     #5c5c5c;
+    --foreground-highlight: #1d4ed8; /* For citations, links, etc. */
+    --foreground-accent:    #3d3f42;
+
+    /** PRIMARY & SECONDARY COLORS **/
+    --primary:          #1d4ed8; /* Deep academic blue */
+    --primary-bright:   #3b82f6;
+    --primary-muted:    #93c5fd;
+    --secondary:        #d97706; /* Warm accent for buttons, callouts */
+    --secondary-bright: #fbbf24;
+    --secondary-muted:  #fcd34d;
+
+    /** BORDER COLORS **/
+    --border:       #cfcfd2;
+    --border-muted: #e6e6e9;
+
+    /** SHADOWS **/
+    --shadow:       rgba(0, 0, 0, 0.05);
+    --shadow-deep:  rgba(0, 0, 0, 0.1);
+
+    /** STATUS COLORS **/
+    --success: #16a34a;
+    --warning: #d97706;
+    --error:   #dc2626;
+
+    /** DISABLED / GRAYSCALE **/
+    --disabled:   #b0b0b2;
+    --gray-light: #d4d4d8;
+    --gray-dark:  #a1a1aa;
+
+    /** MISC **/
+    --scrollbar-color: #cccccf;
 }

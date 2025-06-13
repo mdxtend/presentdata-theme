@@ -1,0 +1,363 @@
+---
+title: Teaching Philosophy & Methods
+---
+
+## Dr. Walter White - Chemistry Education Excellence
+
+<div className="min-h-screen transition-colors duration-300">
+  {(() => {
+    const teachingPrinciples = [
+      {
+        icon: "⚗️",
+        title: "Precision & Accuracy",
+        description: "Every measurement matters. I teach students that in chemistry, there's no room for approximation—precision is the foundation of scientific integrity and safety.",
+        color: "blue"
+      },
+      {
+        icon: "🔬",
+        title: "Hands-On Learning",
+        description: "Students learn best when they can see, touch, and manipulate the elements they're studying. Laboratory work isn't supplementary—it's essential.",
+        color: "green"
+      },
+      {
+        icon: "💡",
+        title: "Real-World Application",
+        description: "Chemistry isn't abstract—it's everywhere around us. I connect every lesson to practical applications students can see in their daily lives.",
+        color: "purple"
+      },
+      {
+        icon: "🎯",
+        title: "Safety First",
+        description: "Respect for chemical properties and laboratory safety protocols is non-negotiable. Understanding risk is as important as understanding reactions.",
+        color: "red"
+      }
+    ];
+
+    const labExperiments = [
+      {
+        number: 1,
+        title: "The Perfect Crystal Lab",
+        description: "Students learn crystallization techniques while exploring molecular structure and purity. This hands-on experiment teaches patience, precision, and the beauty of molecular arrangement.",
+        tags: ["Crystallography", "Purity Analysis", "Molecular Structure"],
+        tagColors: ["blue", "green", "purple"]
+      },
+      {
+        number: 2,
+        title: "Color-Change Chemistry",
+        description: "Dramatic visual reactions that demonstrate pH indicators, oxidation states, and reaction kinetics. Students witness chemistry in action while learning fundamental principles.",
+        tags: ["pH Indicators", "Oxidation", "Kinetics"],
+        tagColors: ["red", "yellow", "indigo"]
+      },
+      {
+        number: 3,
+        title: "Synthesis Challenge",
+        description: "Advanced students work in teams to synthesize specific compounds, learning planning, execution, and quality control—skills essential for any chemistry career.",
+        tags: ["Synthesis Planning", "Quality Control", "Teamwork"],
+        tagColors: ["orange", "teal", "pink"]
+      }
+    ];
+
+    const testimonials = [
+      {
+        quote: "Mr. White didn't just teach us chemistry—he taught us to think like scientists. His attention to detail and passion for perfection inspired me to pursue chemical engineering.",
+        author: "Jesse P., Class of 2008",
+        career: "Now: Chemical Engineer at Los Alamos"
+      },
+      {
+        quote: "The way he explained molecular bonds using everyday examples made everything click. I went from failing chemistry to getting accepted into pre-med.",
+        author: "Maria S., Class of 2009",
+        career: "Now: Medical Student at UNM"
+      },
+      {
+        quote: "His lab safety protocols were intense, but they taught me respect for the power of chemistry. Those lessons probably saved my life in grad school.",
+        author: "David K., Class of 2007",
+        career: "Now: Ph.D. Candidate, MIT"
+      }
+    ];
+
+    const getColorClasses = (color, type = 'border') => {
+      const colorMap = {
+        blue: {
+          border: 'border-blue-500',
+          bg: 'bg-blue-100 dark:bg-blue-900',
+          text: 'text-blue-800 dark:text-blue-200',
+          bgLight: 'bg-blue-50 dark:bg-blue-900/20'
+        },
+        green: {
+          border: 'border-green-500',
+          bg: 'bg-green-100 dark:bg-green-900',
+          text: 'text-green-800 dark:text-green-200',
+          bgLight: 'bg-green-50 dark:bg-green-900/20'
+        },
+        purple: {
+          border: 'border-purple-500',
+          bg: 'bg-purple-100 dark:bg-purple-900',
+          text: 'text-purple-800 dark:text-purple-200',
+          bgLight: 'bg-purple-50 dark:bg-purple-900/20'
+        },
+        red: {
+          border: 'border-red-500',
+          bg: 'bg-red-100 dark:bg-red-900',
+          text: 'text-red-800 dark:text-red-200',
+          bgLight: 'bg-red-50 dark:bg-red-900/20'
+        },
+        yellow: {
+          border: 'border-yellow-500',
+          bg: 'bg-yellow-100 dark:bg-yellow-900',
+          text: 'text-yellow-800 dark:text-yellow-200',
+          bgLight: 'bg-yellow-50 dark:bg-yellow-900/20'
+        },
+        indigo: {
+          border: 'border-indigo-500',
+          bg: 'bg-indigo-100 dark:bg-indigo-900',
+          text: 'text-indigo-800 dark:text-indigo-200',
+          bgLight: 'bg-indigo-50 dark:bg-indigo-900/20'
+        },
+        orange: {
+          border: 'border-orange-500',
+          bg: 'bg-orange-100 dark:bg-orange-900',
+          text: 'text-orange-800 dark:text-orange-200',
+          bgLight: 'bg-orange-50 dark:bg-orange-900/20'
+        },
+        teal: {
+          border: 'border-teal-500',
+          bg: 'bg-teal-100 dark:bg-teal-900',
+          text: 'text-teal-800 dark:text-teal-200',
+          bgLight: 'bg-teal-50 dark:bg-teal-900/20'
+        },
+        pink: {
+          border: 'border-pink-500',
+          bg: 'bg-pink-100 dark:bg-pink-900',
+          text: 'text-pink-800 dark:text-pink-200',
+          bgLight: 'bg-pink-50 dark:bg-pink-900/20'
+        }
+      };
+      return colorMap[color]?.[type] || '';
+    };
+
+    return (
+      <div className="max-w-6xl mx-auto p-6">
+
+        {/* Header Section */}
+        <div className="bg-gradient-to-r from-emerald-50 to-blue-50 dark:from-emerald-900/20 dark:to-blue-900/20 p-8 rounded-xl shadow-lg mb-8 border-l-4 border-emerald-500">
+          <h2 className="text-3xl font-bold text-zinc-800 dark:text-zinc-100 mb-4">Transforming Chemical Education</h2>
+          <p className="text-lg text-zinc-700 dark:text-zinc-300 leading-relaxed">
+            "Chemistry is not just about memorizing formulas—it's about understanding the fundamental forces that govern our universe. My mission is to ignite that spark of curiosity in every student."
+          </p>
+          <div className="mt-4 text-right">
+            <cite className="text-emerald-700 dark:text-emerald-400 font-medium">— Dr. Walter White</cite>
+          </div>
+        </div>
+
+        {/* Core Teaching Principles */}
+        <div className="mb-12">
+          <h2 className="text-2xl font-bold text-zinc-800 dark:text-zinc-100 mb-6">Core Teaching Principles</h2>
+          <div className="grid md:grid-cols-2 gap-6">
+            {teachingPrinciples.map((principle, index) => (
+              <div 
+                key={index}
+                className={`bg-white dark:bg-zinc-800 p-6 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 border-l-4 ${getColorClasses(principle.color, 'border')}`}
+              >
+                <div className="flex items-center mb-4">
+                  <div className={`w-12 h-12 ${getColorClasses(principle.color, 'bg')} rounded-full flex items-center justify-center mr-4`}>
+                    <span className="text-xl">{principle.icon}</span>
+                  </div>
+                  <h3 className="text-xl font-semibold text-zinc-800 dark:text-zinc-100">{principle.title}</h3>
+                </div>
+                <p className="text-zinc-600 dark:text-zinc-300 leading-relaxed">
+                  {principle.description}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Innovative Teaching Methods */}
+        <div className="mb-12">
+          <h2 className="text-2xl font-bold text-zinc-800 dark:text-zinc-100 mb-6">Innovative Teaching Methods</h2>
+          
+          <div className="bg-gradient-to-r from-zinc-800 to-zinc-900 dark:from-zinc-900 dark:to-black text-white p-8 rounded-xl mb-8">
+            <h3 className="text-2xl font-bold mb-6 text-center">Making Chemistry Accessible</h3>
+            <div className="grid md:grid-cols-3 gap-6">
+              {[
+                { icon: "🧪", title: "Visual Demonstrations", desc: "Spectacular reactions that capture attention and illustrate principles" },
+                { icon: "📊", title: "Data-Driven Learning", desc: "Students analyze real experimental data to understand patterns" },
+                { icon: "🎭", title: "Storytelling Science", desc: "Complex concepts explained through engaging narratives" }
+              ].map((method, index) => (
+                <div key={index} className="text-center">
+                  <div className="text-4xl mb-3">{method.icon}</div>
+                  <h4 className="font-semibold mb-2">{method.title}</h4>
+                  <p className="text-zinc-300 dark:text-zinc-400 text-sm">{method.desc}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Signature Laboratory Experiences */}
+        <div className="mb-12">
+          <h2 className="text-2xl font-bold text-zinc-800 dark:text-zinc-100 mb-6">Signature Laboratory Experiences</h2>
+          <div className="space-y-6">
+            {labExperiments.map((lab, index) => (
+              <div key={index} className="bg-white dark:bg-zinc-800 p-6 rounded-lg shadow-md">
+                <h4 className="text-xl font-semibold text-zinc-800 dark:text-zinc-100 mb-3 flex items-center">
+                  <span className="w-8 h-8 bg-blue-500 text-white rounded-full flex items-center justify-center mr-3 font-bold">
+                    {lab.number}
+                  </span>
+                  {lab.title}
+                </h4>
+                <p className="text-zinc-600 dark:text-zinc-300 mb-4">
+                  {lab.description}
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  {lab.tags.map((tag, tagIndex) => (
+                    <span 
+                      key={tagIndex}
+                      className={`px-3 py-1 ${getColorClasses(lab.tagColors[tagIndex], 'bg')} ${getColorClasses(lab.tagColors[tagIndex], 'text')} text-sm rounded-full`}
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Student Success Stories */}
+        <div className="mb-12">
+          <h2 className="text-2xl font-bold text-zinc-800 dark:text-zinc-100 mb-6">Student Success Stories</h2>
+          <div className="bg-amber-50 dark:bg-zinc-500/30 border-l-4 border-amber-400 p-6 rounded-r-lg">
+            <h3 className="text-xl font-semibold text-zinc-800 dark:text-zinc-100 mb-4">Transforming Lives Through Chemistry</h3>
+            
+            <div className="space-y-6">
+              {testimonials.map((testimonial, index) => (
+                <div key={index} className="bg-white dark:bg-zinc-800 p-4 rounded-lg">
+                  <p className="text-zinc-700 dark:text-zinc-300 italic mb-3">
+                    "{testimonial.quote}"
+                  </p>
+                  <div className="flex justify-between items-center">
+                    <cite className="text-sm text-zinc-600 dark:text-zinc-400 font-medium">— {testimonial.author}</cite>
+                    <span className="text-xs text-zinc-500 dark:text-zinc-500">{testimonial.career}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Progressive Learning Model */}
+        <div className="mb-12">
+          <h2 className="text-2xl font-bold text-zinc-800 dark:text-zinc-100 mb-6">The Progressive Learning Model</h2>
+          <div className="bg-white dark:bg-zinc-800 p-8 rounded-lg shadow-md">
+            <div className="space-y-6">
+              {[
+                { 
+                  step: 1, 
+                  title: "Foundation Building", 
+                  desc: "Establishing core concepts through visual demonstrations and hands-on activities. Students develop intuition before diving into complex theory.",
+                  color: "bg-blue-500"
+                },
+                { 
+                  step: 2, 
+                  title: "Skill Development", 
+                  desc: "Rigorous laboratory training focusing on precision, safety, and analytical thinking. Students learn to question, measure, and verify.",
+                  color: "bg-green-500"
+                },
+                { 
+                  step: 3, 
+                  title: "Advanced Application", 
+                  desc: "Independent projects where students design and execute their own experiments, developing confidence and creativity in scientific thinking.",
+                  color: "bg-purple-500"
+                }
+              ].map((phase, index) => (
+                <div key={index} className="flex items-start space-x-4">
+                  <div className={`w-12 h-12 ${phase.color} text-white rounded-full flex items-center justify-center font-bold flex-shrink-0`}>
+                    {phase.step}
+                  </div>
+                  <div>
+                    <h4 className="text-lg font-semibold text-zinc-800 dark:text-zinc-100 mb-2">{phase.title}</h4>
+                    <p className="text-zinc-600 dark:text-zinc-300">{phase.desc}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Teaching Resources */}
+        <div className="mb-12">
+          <h2 className="text-2xl font-bold text-zinc-800 dark:text-zinc-100 mb-6">Teaching Resources & Materials</h2>
+          <div className="grid md:grid-cols-2 gap-6">
+            {[
+              {
+                icon: "📚",
+                title: "Custom Study Guides",
+                items: ["Visual molecular structure guides", "Step-by-step reaction mechanisms", "Laboratory safety checklists", "Problem-solving flowcharts"]
+              },
+              {
+                icon: "🎥",
+                title: "Demonstration Videos",
+                items: ["Spectacular reaction compilations", "Laboratory technique tutorials", "Safety procedure demonstrations", "Real-world chemistry applications"]
+              }
+            ].map((resource, index) => (
+              <div key={index} className="bg-white dark:bg-zinc-800 p-6 rounded-lg shadow-md">
+                <h4 className="text-lg font-semibold text-zinc-800 dark:text-zinc-100 mb-4 flex items-center">
+                  <span className="text-xl mr-2">{resource.icon}</span>
+                  {resource.title}
+                </h4>
+                <ul className="space-y-2 text-zinc-600 dark:text-zinc-300">
+                  {resource.items.map((item, itemIndex) => (
+                    <li key={itemIndex}>• {item}</li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Recognition Section */}
+        <div className="mb-12">
+          <div className="bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-800 dark:to-purple-800 text-white p-8 rounded-xl">
+            <h3 className="text-2xl font-bold mb-6 text-center">Teaching Excellence Awards</h3>
+            
+            <div className="grid md:grid-cols-3 gap-6">
+              {[
+                { icon: "🏆", title: "Teacher of the Year", subtitle: "Jefferson High School 2008" },
+                { icon: "🔬", title: "Innovation in Science Education", subtitle: "New Mexico Education Association" },
+                { icon: "📈", title: "Highest Test Score Improvement", subtitle: "State Chemistry Assessment" }
+              ].map((award, index) => (
+                <div key={index} className="text-center">
+                  <div className="text-4xl mb-3">{award.icon}</div>
+                  <h4 className="font-semibold mb-2">{award.title}</h4>
+                  <p className="text-blue-100 dark:text-blue-200 text-sm">{award.subtitle}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Professional Development */}
+        <div className="mb-12">
+          <h2 className="text-2xl font-bold text-zinc-800 dark:text-zinc-100 mb-6">Professional Development & Training</h2>
+          <div className="bg-white dark:bg-zinc-800 p-6 rounded-lg shadow-md">
+            <h3 className="text-xl font-semibold text-zinc-800 dark:text-zinc-100 mb-4">Sharing Knowledge with Fellow Educators</h3>
+            
+            <div className="space-y-4">
+              {[
+                { color: "blue", title: "Laboratory Safety Workshops", desc: "Training teachers on advanced safety protocols and risk management in chemistry education." },
+                { color: "green", title: "Engaging Demonstration Techniques", desc: "Sharing methods for creating memorable, educational chemical demonstrations that captivate students." },
+                { color: "purple", title: "Precision in Chemical Education", desc: "Emphasizing the importance of accuracy and attention to detail in all aspects of chemistry teaching." }
+              ].map((workshop, index) => (
+                <div key={index} className={`border-l-4 ${getColorClasses(workshop.color, 'border')} pl-4`}>
+                  <h4 className="font-semibold text-zinc-800 dark:text-zinc-100">{workshop.title}</h4>
+                  <p className="text-zinc-600 dark:text-zinc-300 text-sm">{workshop.desc}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  })()}
+</div>

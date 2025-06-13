@@ -1,0 +1,310 @@
+---
+title: CV
+---
+
+<div className="min-h-screen transition-colors duration-300">
+    {(() => {
+    const personalInfo = {
+        name: 'Dr. Walter Hartwell White',
+        title: 'Senior Chemistry Educator & Research Specialist',
+        location: 'Albuquerque, New Mexico',
+        phone: '(505) 555-0123',
+        email: 'w.white@chemistry.edu',
+        linkedin: 'linkedin.com/in/walterwhite-chem'
+    };
+
+    const education = [
+        {
+        degree: 'Ph.D. in Chemistry',
+        school: 'California Institute of Technology (Caltech)',
+        year: '1985-1990',
+        details: 'Dissertation: "Proton Radiography and Crystallographic Studies of Complex Organic Molecules"',
+        gpa: '3.96 GPA'
+        },
+        {
+        degree: 'M.S. in Chemistry',
+        school: 'University of New Mexico',
+        year: '1982-1985',
+        details: 'Specialization in Organic Synthesis and Analytical Chemistry',
+        gpa: '4.0 GPA'
+        },
+        {
+        degree: 'B.S. in Chemistry (Magna Cum Laude)',
+        school: 'University of New Mexico',
+        year: '1978-1982',
+        details: 'Minor in Mathematics, Phi Beta Kappa Honor Society',
+        gpa: '3.89 GPA'
+        }
+    ];
+
+    const experience = [
+        {
+        position: 'Senior Chemistry Instructor',
+        company: 'J.P. Wynne High School',
+        period: '1995 - Present',
+        location: 'Albuquerque, NM',
+        achievements: [
+            'Developed innovative curriculum for AP Chemistry increasing student pass rates by 40%',
+            'Mentored over 2,000 students in advanced chemical principles and laboratory techniques',
+            'Established state-of-the-art chemistry laboratory with cutting-edge analytical equipment',
+            'Implemented safety protocols reducing laboratory incidents by 95%'
+        ]
+        },
+        {
+        position: 'Co-Founder & Research Director',
+        company: 'Gray Matter Technologies',
+        period: '1987 - 1992',
+        location: 'Santa Fe, NM',
+        achievements: [
+            'Co-founded groundbreaking chemical research company specializing in crystallography',
+            'Led research team of 15+ scientists in developing novel synthesis methodologies',
+            'Secured $2.1M in research grants for advanced materials development',
+            'Published 12 peer-reviewed papers in top-tier chemistry journals'
+        ]
+        },
+        {
+        position: 'Research Associate',
+        company: 'Los Alamos National Laboratory',
+        period: '1990 - 1995',
+        location: 'Los Alamos, NM',
+        achievements: [
+            'Conducted advanced research in molecular synthesis and structural analysis',
+            'Developed proprietary techniques for high-purity chemical compound production',
+            'Collaborated with international research teams on classified chemical projects',
+            'Achieved 99.1% purity standards in synthetic compound development'
+        ]
+        }
+    ];
+
+    const skills = {
+        technical: [
+        'Organic & Inorganic Synthesis',
+        'Analytical Chemistry',
+        'Spectroscopy (NMR, IR, MS)',
+        'Crystallography',
+        'Laboratory Management',
+        'Quality Control Systems'
+        ],
+        software: [
+        'ChemDraw Professional',
+        'SciFinder Scholar',
+        'MATLAB',
+        'Origin Pro',
+        'JMP Statistical Software',
+        'Laboratory Information Management Systems (LIMS)'
+        ],
+        leadership: [
+        'Team Leadership & Management',
+        'Curriculum Development',
+        'Research Project Management',
+        'Safety Protocol Implementation',
+        'Student Mentoring',
+        'Grant Writing'
+        ]
+    };
+
+    const publications = [
+        {
+        title: 'Advanced Methodologies in Organic Compound Synthesis',
+        journal: 'Journal of the American Chemical Society',
+        year: '2019',
+        impact: 'Impact Factor: 16.3'
+        },
+        {
+        title: 'Precision Analysis in Molecular Structure Determination',
+        journal: 'Analytical Chemistry',
+        year: '2018',
+        impact: 'Impact Factor: 7.4'
+        },
+        {
+        title: 'Innovative Approaches to High-Purity Chemical Production',
+        journal: 'Chemical Engineering Science',
+        year: '2017',
+        impact: 'Impact Factor: 3.8'
+        }
+    ];
+
+    const awards = [
+        { name: 'Excellence in Chemistry Education Award', org: 'New Mexico Education Association', year: '2020' },
+        { name: 'Outstanding Research Contribution', org: 'American Chemical Society', year: '2019' },
+        { name: 'Teacher of the Year', org: 'Albuquerque School District', year: '2018' },
+        { name: 'Presidential Award for Excellence in Science Teaching', org: 'National Science Foundation', year: '2016' }
+    ];
+
+    const certifications = [
+        'Certified Chemistry Educator (CCE) - American Chemical Society',
+        'Laboratory Safety Certification - OSHA',
+        'Hazardous Materials Handling Certification',
+        'Advanced Spectroscopy Techniques Certification'
+    ];
+
+    const languages = [
+        { lang: 'English', level: 'Native' },
+        { lang: 'Spanish', level: 'Conversational' },
+        { lang: 'German', level: 'Technical Reading' }
+    ];
+
+    return (
+        <div className="max-w-4xl mx-auto p-6">
+        {/* Header */}
+        <div className="bg-gradient-to-r from-zinc-800 to-zinc-700 p-8 rounded-xl shadow-2xl mb-8 border border-zinc-700">
+            <div className="flex items-center justify-between">
+            <div>
+                <h1 className="text-4xl font-bold text-white mb-2">{personalInfo.name}</h1>
+                <p className="text-xl text-blue-400 mb-4">{personalInfo.title}</p>
+                <div className="flex flex-wrap gap-4 text-zinc-300">
+                <span>📍 {personalInfo.location}</span>
+                <span>📞 {personalInfo.phone}</span>
+                <span>📧 {personalInfo.email}</span>
+                <span>💼 {personalInfo.linkedin}</span>
+                </div>
+            </div>
+            <div className="w-24 h-24 bg-gradient-to-br from-blue-600 to-indigo-700 rounded-full flex items-center justify-center text-white text-2xl font-bold shadow-xl">
+                WW
+            </div>
+            </div>
+        </div>
+
+        {/* Professional Summary */}
+        <section className="mb-8">
+            <h2 className="text-2xl font-bold text-white mb-4 border-b-2 border-blue-500 pb-2">Professional Summary</h2>
+            <div className="bg-zinc-800 p-6 rounded-lg border border-zinc-700">
+            <p className="text-zinc-300 leading-relaxed">
+                Accomplished chemistry educator and research scientist with over 25 years of experience in advanced chemical synthesis, 
+                analytical chemistry, and educational leadership. Proven track record of developing innovative teaching methodologies, 
+                conducting groundbreaking research, and mentoring the next generation of scientists. Expertise in high-precision 
+                laboratory techniques and commitment to maintaining the highest standards of scientific excellence.
+            </p>
+            </div>
+        </section>
+
+        {/* Education */}
+        <section className="mb-8">
+            <h2 className="text-2xl font-bold text-white mb-4 border-b-2 border-green-500 pb-2">Education</h2>
+            <div className="space-y-4">
+            {education.map((edu, i) => (
+                <div key={i} className="bg-zinc-800 p-6 rounded-lg border border-zinc-700">
+                <div className="flex justify-between items-start mb-2">
+                    <h3 className="text-lg font-semibold text-white">{edu.degree}</h3>
+                    <span className="text-blue-400 font-medium">{edu.year}</span>
+                </div>
+                <p className="text-green-400 mb-2">{edu.school}</p>
+                <p className="text-zinc-400 text-sm mb-1">{edu.details}</p>
+                <p className="text-purple-400 text-sm font-medium">{edu.gpa}</p>
+                </div>
+            ))}
+            </div>
+        </section>
+
+        {/* Professional Experience */}
+        <section className="mb-8">
+            <h2 className="text-2xl font-bold text-white mb-4 border-b-2 border-purple-500 pb-2">Professional Experience</h2>
+            <div className="space-y-6">
+            {experience.map((exp, i) => (
+                <div key={i} className="bg-zinc-800 p-6 rounded-lg border border-zinc-700">
+                <div className="flex justify-between items-start mb-2">
+                    <h3 className="text-lg font-semibold text-white">{exp.position}</h3>
+                    <span className="text-blue-400 font-medium">{exp.period}</span>
+                </div>
+                <p className="text-green-400 mb-1">{exp.company}</p>
+                <p className="text-zinc-500 text-sm mb-3">{exp.location}</p>
+                <ul className="space-y-2">
+                    {exp.achievements.map((achievement, j) => (
+                    <li key={j} className="text-zinc-300 text-sm flex items-start">
+                        <span className="text-blue-400 mr-2">•</span>
+                        {achievement}
+                    </li>
+                    ))}
+                </ul>
+                </div>
+            ))}
+            </div>
+        </section>
+
+        {/* Skills Grid */}
+        <section className="mb-8">
+            <h2 className="text-2xl font-bold text-white mb-4 border-b-2 border-amber-500 pb-2">Core Competencies</h2>
+            <div className="grid md:grid-cols-3 gap-6">
+            {Object.entries(skills).map(([category, skillList], i) => (
+                <div key={i} className="bg-zinc-800 p-6 rounded-lg border border-zinc-700">
+                <h3 className="text-lg font-semibold text-white mb-4 capitalize">{category} Skills</h3>
+                <div className="space-y-2">
+                    {skillList.map((skill, j) => (
+                    <div key={j} className="text-zinc-300 text-sm flex items-center">
+                        <span className="w-2 h-2 bg-blue-500 rounded-full mr-3"></span>
+                        {skill}
+                    </div>
+                    ))}
+                </div>
+                </div>
+            ))}
+            </div>
+        </section>
+
+        {/* Publications */}
+        <section className="mb-8">
+            <h2 className="text-2xl font-bold text-white mb-4 border-b-2 border-red-500 pb-2">Selected Publications</h2>
+            <div className="space-y-4">
+            {publications.map((pub, i) => (
+                <div key={i} className="bg-zinc-800 p-4 rounded-lg border border-zinc-700">
+                <h4 className="text-white font-medium mb-1">{pub.title}</h4>
+                <p className="text-blue-400 text-sm mb-1">{pub.journal} ({pub.year})</p>
+                <p className="text-green-400 text-xs">{pub.impact}</p>
+                </div>
+            ))}
+            </div>
+        </section>
+
+        {/* Two Column Layout */}
+        <div className="grid md:grid-cols-2 gap-6 mb-8">
+            {/* Awards */}
+            <section>
+            <h2 className="text-2xl font-bold text-white mb-4 border-b-2 border-yellow-500 pb-2">Awards & Recognition</h2>
+            <div className="space-y-3">
+                {awards.map((award, i) => (
+                <div key={i} className="bg-zinc-800 p-4 rounded-lg border border-zinc-700">
+                    <h4 className="text-white font-medium text-sm">{award.name}</h4>
+                    <p className="text-zinc-400 text-xs">{award.org} • {award.year}</p>
+                </div>
+                ))}
+            </div>
+            </section>
+
+            {/* Certifications */}
+            <section>
+            <h2 className="text-2xl font-bold text-white mb-4 border-b-2 border-cyan-500 pb-2">Certifications</h2>
+            <div className="space-y-3">
+                {certifications.map((cert, i) => (
+                <div key={i} className="bg-zinc-800 p-3 rounded-lg border border-zinc-700">
+                    <p className="text-zinc-300 text-sm">{cert}</p>
+                </div>
+                ))}
+            </div>
+            </section>
+        </div>
+
+        {/* Languages */}
+        <section className="mb-8">
+            <h2 className="text-2xl font-bold text-white mb-4 border-b-2 border-pink-500 pb-2">Languages</h2>
+            <div className="bg-zinc-800 p-6 rounded-lg border border-zinc-700">
+            <div className="flex flex-wrap gap-4">
+                {languages.map((lang, i) => (
+                <div key={i} className="flex items-center space-x-2">
+                    <span className="text-white font-medium">{lang.lang}</span>
+                    <span className="text-zinc-400">•</span>
+                    <span className="text-blue-400 text-sm">{lang.level}</span>
+                </div>
+                ))}
+            </div>
+            </div>
+        </section>
+
+        {/* Footer */}
+        <div className="text-center text-zinc-500 mt-12 p-4 border-t border-zinc-700 font-mono text-xs">
+            <p><em>This profile represents a fictional character created for educational and entertainment purposes.</em></p>
+            <p className="mt-2">© 2025 Academic Profile Template | PresentDATA | Inspired by Breaking Bad Television Series</p>
+        </div>
+        </div>
+    );
+    })()}
+</div>

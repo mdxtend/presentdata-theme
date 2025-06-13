@@ -12,7 +12,7 @@
     @apply relative font-mono tracking-tight;
     word-spacing: -0.2em;
   }
-
+  
   /* ul {
     @apply !mt-0;
   } */
@@ -21,6 +21,12 @@
 .word-space-tight {
   @apply tracking-tight;
   word-spacing: -0.2em;
+}
+
+.chroma {
+  h1. h2. h3. h4. h5. h6 {
+    @apply !text-white;
+  }
 }
 
 h1 .anchor,
@@ -41,6 +47,14 @@ h6.group-heading:hover .anchor {
   @apply opacity-40;
 }
 
+[class="group-heading"] {
+  @apply text-foreground;
+}
+
+p strong {
+  @apply text-foreground;
+}
+
 .anchor-icon {
   @apply w-4 h-4 block text-current cursor-pointer;
 }
@@ -51,6 +65,7 @@ h3,
 h4,
 h5,
 h6 {
+  /* @apply text-foreground; */
   scroll-margin-top: 4.2rem;
   letter-spacing: 1.2px;
 }
@@ -58,7 +73,7 @@ h6 {
 /** CODE BLOCKS **/
 
 [data-rehype-pretty-code-figure] {
-  @apply m-0;
+  @apply m-0 ;
 }
 
 .wrap-text {
@@ -93,8 +108,8 @@ code::after {
   background-color: var(--color-background-codeblock);
 }
 
-code:where([data-theme="default"]) {
-  @apply !bg-background-code !text-sm !font-normal font-mono px-2 py-1 rounded-lg tracking-wide border border-border-muted;
+code:where([data-theme="default"]:not(pre *)) {
+  @apply !bg-background-code text-foreground !text-sm !font-normal font-mono px-2 py-1 rounded-lg tracking-wide border border-border-muted;
   background-color: var(--color-background-codeblock);
 }
 
@@ -102,15 +117,14 @@ code:where([data-theme="default"]) {
   @apply text-foreground font-normal;
 
   /* table {
-    @apply bg-white;
-  } */
+    } */
 
   thead {
-    @apply bg-background-secondary flex justify-between;
+    @apply text-foreground bg-background-secondary flex justify-between;
   }
 
   tr {
-    @apply border-b border-background-code w-full justify-evenly text-left flex gap-px bg-background-code text-sm;
+    @apply text-foreground border-b border-background-code w-full justify-evenly text-left flex gap-px bg-background-code text-sm;
   }
   tr:first-child {
     @apply border-t w-full justify-evenly text-left flex gap-px bg-background-code text-sm;
@@ -130,6 +144,10 @@ code:where([data-theme="default"]) {
       background-color: var(--background-code);
     }
   }
+}
+
+th {
+  @apply !text-foreground;
 }
 
 input[type="checkbox"] {
@@ -161,7 +179,7 @@ input[type="checkbox"][checked] {
     padding-left: 1.5rem;
     border-left: 4px solid var(--color-primary-bright);
     font-style: normal;
-    @apply bg-background-secondary;
+    @apply bg-background-secondary text-foreground;
 
     .group-heading {
       @apply mt-4 font-bold;
@@ -191,7 +209,7 @@ input[type="checkbox"][checked] {
 
   .prose pre {
     margin: 0;
-    @apply bg-background-dark;
+    @apply bg-black;
   }
 
   .prose hr {

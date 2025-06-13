@@ -135,7 +135,12 @@ export const Code = memo<CodeProps>(({
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const [isSettings, setIsSettings] = useState(false);
     const [sandboxOpen, setSandboxOpen] = useState(false)
-    const [code, setCode] = useState('console.log("Hi PresentDATA!")')
+    const [theme, setTheme] = useState<'light' | 'dark'>('dark')
+
+    useEffect(() => {
+        const currentTheme = document.documentElement.getAttribute('theme') as 'light' | 'dark' | null
+        setTheme(currentTheme === 'light' ? 'light' : 'dark')        
+    }, [sandboxOpen])
 
     const { isCopied, copyToClipboard } = useClipboard();
 
@@ -213,7 +218,7 @@ export const Code = memo<CodeProps>(({
             >
                 {/* header with file selector */}
                 <div className="flex flex-col items-start bg-background-darker relative">
-                    <div className="flex items-center justify-between w-full max-h-10 h-full">
+                    <div className="flex items-center justify-between w-full min-h-10 h-full">
                         {isMultipleFiles ? (
                             <div ref={dropdownRef} className="relative w-fit">
                                 <button
@@ -414,14 +419,14 @@ export const Code = memo<CodeProps>(({
                 {childrenArray.map((child, index) =>
                     activeTab === index ? (
                         <div className={`flex flex-col items-start bg-background-primary group overflow-x-auto overflow-y-hidden rounded-b-2xl ${isLineNumbers ? "codeblock-linenumbers" : ""} ${isWrapped ? 'wrap-text' : ''}`}>
-                            <div className="w-full !bg-background-dark" key={`${child.props.fileName}-${index}`} id={`tab-${index}-${uniqueId}`}>
+                            <div className="w-full !bg-black" key={`${child.props.fileName}-${index}`} id={`tab-${index}-${uniqueId}`}>
                                 {child.props.children}
                             </div>
                         </div>
                     ) : null
                 )}
             </div>
-            <CodeSandboxModal open={sandboxOpen} onClose={() => setSandboxOpen(false)} fileName={currentTab.props.fileName} code={extractTextFromReactNode(currentTab.props.children).trim()} />
+            <CodeSandboxModal open={sandboxOpen} theme={theme} onClose={() => setSandboxOpen(false)} fileName={currentTab.props.fileName} code={extractTextFromReactNode(currentTab.props.children).trim()} />
         </>
     );
 });

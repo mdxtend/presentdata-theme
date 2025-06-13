@@ -10,19 +10,20 @@ interface SearchableDocument {
     type: string;
     title?: string;
     url: string;
+    tags?: string[];
     // OTHER PROPERTIES TO FILTER OR DISPLAY
 }
 
 const fuzzySearch = (query: string | undefined, documentsToSearch: SearchableDocument[]) => {
     const groupDocumentsByType = (docs: SearchableDocument[]) => {
-        const groupedResults = new Map<string, { title: string; url: string }[]>();
+        const groupedResults = new Map<string, { title: string; url: string; tags?: string[] }[]>();
 
         for (const doc of docs) {
             const docTitle = doc.title || '';
             if (!groupedResults.has(doc.type)) {
                 groupedResults.set(doc.type, []);
             }
-            groupedResults.get(doc.type)!.push({ title: docTitle, url: doc.url });
+            groupedResults.get(doc.type)!.push({ title: docTitle, url: doc.url, tags: 'tags' in doc ? doc.tags : undefined });
         }
         return Array.from(groupedResults.entries());
     };
@@ -35,7 +36,8 @@ const fuzzySearch = (query: string | undefined, documentsToSearch: SearchableDoc
 
     const filteredDocuments = documentsToSearch.filter(doc =>
         doc.title?.toLowerCase().includes(lowerCaseQuery) ||
-        doc.url.toLowerCase().includes(lowerCaseQuery)
+        doc.url.toLowerCase().includes(lowerCaseQuery) ||
+        (doc.tags?.some(tag => tag.toLowerCase().includes(lowerCaseQuery)))
     );
 
     return groupDocumentsByType(filteredDocuments);
@@ -52,12 +54,12 @@ export function useSearchData(isActive: boolean, initialQuery: string = '') {
         if (isActive && !data) {
             setLoading(true);
             setTimeout(() => {
-                const grouped = new Map<string, { title: string | undefined; url: string }[]>()
+                const grouped = new Map<string, { title: string | undefined; url: string; tags?: string[] }[]>()
 
                 for (const doc of Contentlayer.allDocuments) {
                     if (doc.type === 'Profile') continue;
                     if (!grouped.has(doc.type)) grouped.set(doc.type, [])
-                    grouped.get(doc.type)!.push({ title: doc.title, url: doc.url })
+                    grouped.get(doc.type)!.push({ title: doc.title, url: doc.url, tags: 'tags' in doc ? (doc as any).tags : undefined });
                 }
                 setData(Array.from(grouped.entries()));
                 setLoading(false);
@@ -99,7 +101,7 @@ export const SearchBarModal = ({
     const searchParams = useSearchParams();
     const router = useRouter();
     const pathname = usePathname();
-    const initialQuery = searchParams.get('q') || '';
+    const initialQuery = searchParams.get('q') || '?';
     const { query, setQuery, filteredData: data, loading, inputRef, handleInputChange } = useSearchData(isOpen, initialQuery);
 
     const [activeResultIndex, setActiveResultIndex] = useState(-1);
@@ -112,14 +114,25 @@ export const SearchBarModal = ({
         );
     }, [data]);
 
-    const onClose = useCallback(() => {
-        setQuery('');
-        setActiveResultIndex(-1);
-        const newSearchParams = new URLSearchParams(searchParams.toString());
-        newSearchParams.delete('q');
-        router.replace(`${pathname}?${newSearchParams.toString()}`, { scroll: false });
-        onPropClose();
-    }, [onPropClose, pathname, router, searchParams, setQuery]);
+    const onClose = useCallback(
+        (shouldCleanUrl = true) => {
+            setQuery('');
+            setActiveResultIndex(-1);
+
+            if (shouldCleanUrl) {
+                const newSearchParams = new URLSearchParams(searchParams.toString());
+                newSearchParams.delete('q');
+
+                const queryString = newSearchParams.toString();
+                const url = queryString ? `${pathname}?${queryString}` : pathname;
+                router.replace(url, { scroll: false });
+            }
+
+            onPropClose();
+        },
+        [onPropClose, pathname, router, searchParams, setQuery]
+    );
+
 
     useEffect(() => {
         setActiveResultIndex(-1);
@@ -190,7 +203,7 @@ export const SearchBarModal = ({
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
                         transition={{ duration: 0.2 }}
-                        onClick={onClose}
+                        onClick={() => onClose(false)}
                     />
 
                     {/* modal */}
@@ -199,7 +212,7 @@ export const SearchBarModal = ({
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
-                        onClick={onClose}
+                        onClick={() => onClose(false)}
                     >
                         <motion.div
                             className="bg-background-secondary rounded-2xl shadow-xl p-2 py-4 h-[35rem] w-[40rem] overflow-hidden flex flex-col"
@@ -251,7 +264,7 @@ export const SearchBarModal = ({
                                                                     className={`px-4 py-2 min-h-10 border-l-3 rounded-r-lg hover:bg-background-tertiary border-background-secondary hover:border-primary group cursor-pointer ${activeResultIndex === actualIndex ? 'border-primary bg-background-tertiary' : 'border-background-secondary'}`}
                                                                     onClick={() => {
                                                                         router.push(item.url);
-                                                                        onClose();
+                                                                        onClose(false);
                                                                     }}
                                                                 >
                                                                     <Link href={item.url}>

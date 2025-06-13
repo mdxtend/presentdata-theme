@@ -46,7 +46,7 @@ export default function Pagination({
             <Link
                 key={i}
                 href={getLinkByIndex(i)}
-                className={`p-1.5 px-2.5 rounded ${i === index
+                className={`p-1.5 px-2.5 rounded cursor-pointer ${i === index
                     ? 'bg-primary-muted text-foreground'
                     : 'text-forground bg-background-code border border-border hover:bg-foreground/20'
                     }`}
@@ -79,7 +79,7 @@ export default function Pagination({
                         return isDisabled ? (
                             <div key={type} className={`opacity-50 select-none ${classes}`}>{content}</div>
                         ) : (
-                            <Link key={type} href={href} className={`${classes} hover:bg-foreground/20`}>
+                            <Link key={type} href={href} className={`${classes} hover:bg-foreground/20 cursor-pointer`}>
                                 {content}
                             </Link>
                         );
@@ -111,7 +111,7 @@ export default function Pagination({
                         return isDisabled ? (
                             <div key={type} className={`opacity-50 select-none ${classes}`}>{content}</div>
                         ) : (
-                            <Link key={type} href={href} className={`${classes} hover:bg-foreground/20`}>
+                            <Link key={type} href={href} className={`${classes} hover:bg-foreground/20 cursor-pointer`}>
                                 {content}
                             </Link>
                         );

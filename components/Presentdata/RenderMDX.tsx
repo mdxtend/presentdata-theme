@@ -2,13 +2,16 @@ import React from 'react'
 import { mdxComponents } from './components';
 import { Profile } from '@/.contentlayer/generated';
 import { useMDXComponent } from 'next-contentlayer/hooks';
+import { useTheme } from '../Hooks/ThemeProvider';
 
 interface RenderMDXProps<T = { body?: { code?: string } }> {
   content?: T | Profile | null
   className?: string
 }
 
+
 const RenderMDX = <T extends { body?: { code?: string } }>({ content, className = '' }: RenderMDXProps<T>) => {
+  const { resolvedMode, toggleMode } = useTheme();
   if (!content?.body?.code) {
     return <div className="text-center py-10 text-gray-500">Content not available</div>
   }

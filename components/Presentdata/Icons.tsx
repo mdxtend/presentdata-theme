@@ -657,37 +657,23 @@ export const LinkArrow = ({ className, ...rest }: IconProps) => (
     </motion.svg>
 );
 
-
-interface CheckIconProps {
-    className?: string;
-}
-
-export const CheckIcon = ({ className, ...rest }: CheckIconProps) => {
-    return (
-        <motion.svg
-            fill="none"
-            stroke="#f5f5f5"
-            viewBox="0 0 24 24"
-            className={`stroke-[#fff] ${className}`}
-            {...rest}
-        // {...popAnimation} // Apply animation properties here
-        >
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
-        </motion.svg>
-    );
-};
-
-
 interface ClassNameProps {
     className: string;
 }
+
+export const CheckIcon = ({ className, ...rest }: ClassNameProps) => (
+    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" className={`stroke-[#fff] ${className}`} {...rest}>
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
+    </svg>
+);
+
 export const CopyIcon = ({ className, ...rest }: ClassNameProps) => (
-    <svg fill="none" stroke="#f5f5f5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" className={`${className}`} {...rest}
+    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" className={`${className}`} {...rest}
     ><path className="stroke-dark dark:stroke-light" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.6px" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg>
 );
 
 export const CopiedIcon = ({ className, ...rest }: ClassNameProps) => (
-    <svg fill="none" stroke="#2cbb5d" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" className={className} {...rest}><path className="stroke-[#009b36] dark:stroke-[#00ff59]" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" /></svg>
+    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" className={className} {...rest}><path className="stroke-[#009b36] dark:stroke-[#00ff59]" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" /></svg>
 );
 
 export const ViewCountSVG = ({ className }: SvgProps) => (

@@ -20,7 +20,7 @@ const Button = ({
   asButton = false,
   className = ''
 }: ButtonProps) => {
-  const baseClass = 'w-fit p-1.5 px-6 max-lg:p-1 max-lg:px-3 bg-primary-bright hover:bg-primary text-black font-mono border border-primary uppercase text-sm max-lg:text-xs rounded-[8px] font-bold no-underline'
+  const baseClass = 'w-fit p-1.5 px-6 max-lg:p-1 max-lg:px-3 bg-primary-bright hover:bg-primary text-background text-black font-mono border border-primary uppercase text-sm max-lg:text-xs rounded-[8px] no-underline'
   const mergedClass = `${baseClass} ${className}`
 
   if (asButton || (!href && onClick)) {

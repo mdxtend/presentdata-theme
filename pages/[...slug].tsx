@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { format, parseISO } from 'date-fns';
 import { GetStaticPaths, GetStaticProps } from 'next';
 import * as Contentlayer from 'contentlayer/generated';
+import { allDocuments } from 'contentlayer/generated';
 
 import ListItems from '@/components/Elements/ListIems';
 import Breadcrumb from '@/components/Elements/Breadcrumb';
@@ -43,9 +44,11 @@ export default function Page({ page, childPages, doc, siteMetaData }: PageProps)
   const [showScrollToTop, setShowScrollToTop] = useState(false);
 
   const typeName = page?.pageType?.name;
-  const key = `all${typeName}s` as keyof typeof Contentlayer;
-  const documents = Contentlayer[key] as unknown as any[] || [];
-  const docPage = documents.find(d => d._id === `${typeName.toLowerCase()}s/index.mdx`);
+  const documents = allDocuments.filter(doc => doc.type === typeName);
+  const docPage = documents.find(d => d._id === `${d.url.split('/').filter(Boolean)[0]}/index.mdx`);
+  console.log(documents);
+  
+
   const isDocPage = docPage?.url?.replace(/\/+$/, '') === router.asPath.replace(/\/+$/, '');
 
   useEffect(() => {
@@ -92,25 +95,28 @@ export default function Page({ page, childPages, doc, siteMetaData }: PageProps)
     return (
       <div className="min-h-[calc(100vh-8rem)] flex flex-col gap-2 p-4 py-10 max-lg:py-5">
         <Head>
-          <title>{`${page?.title ?? docPage?.title ?? 'Untitled'} | ${siteMetaData?.title ?? 'Site'}`}</title>
-          <meta name="description" content={page?.description ?? docPage?.description ?? siteMetaData?.description ?? ''} />
-          <meta property="og:title" content={`${page?.title ?? docPage?.title ?? 'Untitled'} | ${siteMetaData?.title ?? 'Site'}`} />
-          <meta property="og:description" content={page?.description ?? docPage?.description ?? siteMetaData?.description ?? ''} />
+          <title>{`${docPage?.title ?? page?.title ?? doc?.title ?? 'Untitled'} | ${siteMetaData?.title ?? 'Site'}`}</title>
+          <meta name="description" content={page?.description ?? doc?.description ?? siteMetaData?.description ?? ''} />
+          <meta property="og:title" content={`${page?.title ?? doc?.title ?? 'Untitled'} | ${siteMetaData?.title ?? 'Site'}`} />
+          <meta property="og:description" content={page?.description ?? doc?.description ?? siteMetaData?.description ?? ''} />
           <meta property="og:type" content="website" />
-          <meta property="og:url" content={`https://yoursite.com/${page?.slug ?? docPage?.url ?? ''}`} />
-          <link rel="canonical" href={`https://yoursite.com/${page?.slug ?? docPage?.url ?? ''}`} />
+          <meta property="og:url" content={`https://yoursite.com/${page?.slug ?? doc?.url ?? ''}`} />
+          <link rel="canonical" href={`https://yoursite.com/${page?.slug ?? doc?.url ?? ''}`} />
         </Head>
 
-        <h1 className="text-5xl max-lg:text-2xl font-serif mb-3">{page?.title || "Untitled"}{documents.length > 0 && (` - ${documents.length}`)}</h1>
+        <h1 className="text-5xl max-lg:text-2xl font-serif mb-3">{docPage?.title || page?.title || "Untitled"}</h1>
+        {/* {documents.length > 0 && (` - ${documents.length}`)} */}
 
-        {docPage && (
+        {doc && (
           <section>
-            <RenderMDX content={docPage} className="mt-10 mb-20" />
+            <RenderMDX content={doc} className="mb-10" />
           </section>
         )}
 
         {page.pageType && (
-          <ListItems items={documents} />
+          <ListItems items={documents.filter(
+            d => d._id !== `${d.url.split('/').filter(Boolean)[0]}/index.mdx`
+          )} />
         )}
       </div>
     );
@@ -206,13 +212,9 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
   const pagePaths = presentData.pages.flatMap((page: any) => generatePagePaths(page));
 
-  const docPaths = Object.entries(Contentlayer)
-    .filter(([key, value]) => key.startsWith('all') && Array.isArray(value))
-    .flatMap(([_, docs]) =>
-      (docs as any[]).map((doc) => ({
-        params: { slug: doc._raw.flattenedPath.split('/') },
-      }))
-    );
+  const docPaths = allDocuments.map((doc) => ({
+    params: { slug: doc._raw.flattenedPath.split('/') },
+  }));
 
   return {
     paths: [...pagePaths, ...docPaths],
@@ -236,10 +238,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     return null;
   };
 
-  const getAllDocs = (): any[] =>
-    Object.entries(Contentlayer)
-      .filter(([key, value]) => key.startsWith('all') && Array.isArray(value))
-      .flatMap(([_, docs]) => docs as any[]);
+  const getAllDocs = (): any[] => allDocuments;
 
   const matchedPage = findPage(presentData.pages, slugParts);
 

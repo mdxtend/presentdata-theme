@@ -4,6 +4,7 @@ import { allProfiles } from 'contentlayer/generated'
 import { UpArrow } from "@/components/Presentdata/Icons";
 import RenderMDX from "@/components/Presentdata/RenderMDX";
 import presentData from "@/public/data/presentdata.config";
+import Image from "next/image";
 
 export default function Home() {
   const heroSection = presentData.landingPage.heroSection;
@@ -22,7 +23,7 @@ export default function Home() {
   return (
     <div className="text-lg">
       <Head>
-        <title>{`Research Template | PresentDATA`}</title>
+        <title>{`Walter White | Theme Template | PresentDATA`}</title>
       </Head>
       <main className="flex flex-col gap-10 p-4 py-10 max-lg:py-5">
         <section className="h-[calc(100vh-6.5rem)] max-lg:h-auto max-h-full">
@@ -33,7 +34,9 @@ export default function Home() {
             <div className="flex max-lg:flex-col justify-between">
               <div className="w-[35%] max-lg:w-full flex items-center justify-center">
                 <div className="h-96 w-80 bg-background-hover">
-                  <img
+                  <Image
+                    width={500}
+                    height={500}
                     src={`/data/images/${heroSection.imageUrl}`}
                     alt={heroSection.name}
                     className="w-full h-full object-cover"
@@ -55,7 +58,7 @@ export default function Home() {
                 ))}
               </div>
               <div
-                className="flex items-center justify-center w-[100%+56px] hover:bg-background-secondary cursor-pointer -mx-14 p-5"
+                className="flex items-center justify-center w-[100%+56px] max-lg:w-full max-lg:mx-auto hover:bg-background-secondary cursor-pointer -mx-14 p-5"
                 onClick={scrollToUserProfile}
               >
                 <div>
